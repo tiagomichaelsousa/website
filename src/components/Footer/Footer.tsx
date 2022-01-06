@@ -29,15 +29,15 @@ const Footer: React.FC = () => {
           zIndex: '$1',
           left: '40%',
           lineHeight: '$64',
-          maxWidth: '50%',
+          maxWidth: '70%',
           '@mobile': {
             lineHeight: '$16',
             maxWidth: '50%',
-            top: '18%',
+            top: '12%',
           },
           '@bp1': { top: '25%' },
           '@bp2': { top: '30%' },
-          '@bp3': { top: '30%', maxWidth: '40%' },
+          '@bp3': { top: '30%', maxWidth: '45%' },
         }}
       >
         Interested in collaborating with me?
