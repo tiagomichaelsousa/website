@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "jsx": "react-jsx",
+    "lib": ["dom", "es2015", "es2017"],
+    "strict": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "removeComments": false,
+    "baseUrl": ".",
+    "paths": {
+      "components/*": ["src/components/*"],
+      "@components": ["src/components"],
+      "@utils/*": ["src/components/utils"],
+      "@sections": ["src/sections/*"],
+      "@pages/*": ["src/pages/*"],
+      "@theme/*": ["src/theme/*"],
+      "@images/*": ["src/images/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@types/*": ["src/types/*"]
+    }
+  },
+  "include": ["./src/**/*", "./custom.d.ts", "./.eslintrc.js", "./gatsby-config.js", "gatsby-ssr.jsx", "./gatsby-node.js"]
+}

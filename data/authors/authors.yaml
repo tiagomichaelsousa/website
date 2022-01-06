@@ -1,0 +1,24 @@
+- id: tsousa
+  name: Tiago Sousa
+  avatar: ./avatars/tsousa.jpg
+  bio: |
+    Hey there, my name is Tiago Sousa and I'm a Fullstack Engineer currently working at xgeeks.
+    I'm a technology enthusiast and I try to explore new things to keep myself always updated.
+    My motto is definitely "Sharing is caring" and that's exactly why you are currently reading this!
+  social:
+    github:
+      url: https://github.com/tiagomichaelsousa
+      handle: '@tiagomichaelsousa'
+    linkedin:
+      url: https://www.linkedin.com/in/tiagomichaelsousa/
+      handle: '@tiagomichaelsousa'
+    twitter:
+      url: https://twitter.com/tmichaelsousa
+      handle: '@tmichaelsousa'
+    medium:
+      url: https://medium.com/@tiagomichaelsousa
+      handle: '@tiagomichaelsousa'
+  company:
+    name: xgeeks
+    url: https://xgeeks.io/
+    role: Software Engineer

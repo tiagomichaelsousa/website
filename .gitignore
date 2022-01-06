@@ -1,0 +1,11 @@
+node_modules/
+.cache/
+public
+.DS_store
+.cache
+.eslintcache
+.env.production
+.env.development
+.idea
+.DS_store
+yarn-error.log
