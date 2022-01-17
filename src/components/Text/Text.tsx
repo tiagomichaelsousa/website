@@ -87,6 +87,12 @@ export const Text = styled('span', {
         fontWeight: 'bold',
       },
     },
+    blured: {
+      true: {
+        color: 'transparent',
+        textShadow: '0 0 25px $colors$text',
+      },
+    },
     color: {
       primary: {
         color: '$primary',

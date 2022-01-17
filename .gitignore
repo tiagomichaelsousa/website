@@ -9,3 +9,4 @@ public
 .idea
 .DS_store
 yarn-error.log
+.vscode
