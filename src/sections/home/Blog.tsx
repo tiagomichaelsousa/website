@@ -30,16 +30,20 @@ const Blog: React.FC = () => {
           </Heading>
         </Flex>
 
-        <Flex
-          gap="32"
-          wrap="wrap"
+        <Box
           css={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            gridAutoRows: '1fr',
+            gridGap: '$32',
             '@mobile': {
-              justifyContent: 'center',
+              gridTemplateColumns: '1fr',
             },
             '@bp1': {
               '& > :first-child': {
+                gridColumn: '1 / -1',
                 width: '100%',
+                display: 'flex',
                 flexDirection: 'row',
                 '& > a': {
                   paddingRight: '$32',
@@ -57,7 +61,6 @@ const Blog: React.FC = () => {
               align="center"
               direction="column"
               css={{
-                width: 400,
                 '@mobile': {
                   width: '100%',
                   flexDirection: 'column',
@@ -103,7 +106,7 @@ const Blog: React.FC = () => {
               </Flex>
             </Card>
           ))}
-        </Flex>
+        </Box>
       </Container>
     </Container>
   );
