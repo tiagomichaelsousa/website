@@ -34,10 +34,9 @@ const Article = (
   const { siteUrl } = useSiteMetadata();
 
   const {
-    frontmatter: { title, date, dateFromNow, categories, authors, description },
+    frontmatter: { title, date, dateFromNow, categories, authors, description, slug },
     timeToRead,
     body,
-    slug,
     excerpt,
   } = mdx;
 
@@ -219,17 +218,17 @@ const Article = (
 
 export const pageQuery = graphql`
   query ArticleQuery($slug: String!) {
-    mdx(slug: { eq: $slug }) {
+    mdx(frontmatter: { slug: { eq: $slug } }) {
       body
       timeToRead
       excerpt(pruneLength: 160)
-      slug
       frontmatter {
         date(formatString: "dddd, DD MMMM YYYY")
         dateFromNow: date(fromNow: true)
         title
         description
         categories
+        slug
         authors {
           id
           name
@@ -277,8 +276,8 @@ type ArticlePageProps = {
   body: string;
   timeToRead: number;
   excerpt: string;
-  slug: string;
   frontmatter: {
+    slug: string;
     date: string;
     dateFromNow: string;
     title: string;

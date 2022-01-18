@@ -6,18 +6,15 @@ const useLatestArticles = (): Article[] => {
     allMdx: { edges },
   } = useStaticQuery(graphql`
     query LatestArticles {
-      allMdx(
-        filter: {slug: {regex: "/articles/"}}
-        sort: {order: DESC, fields: [frontmatter___date]}
-      ) {
+      allMdx(filter: { slug: { regex: "/articles/" } }, sort: { order: DESC, fields: [frontmatter___date] }) {
         edges {
           node {
-            slug
             frontmatter {
               categories
               date
               description
               title
+              slug
               image {
                 childImageSharp {
                   gatsbyImageData(width: 800, placeholder: BLURRED, formats: [AUTO, WEBP, AVIF])
@@ -27,12 +24,10 @@ const useLatestArticles = (): Article[] => {
           }
         }
       }
-    }    
+    }
   `);
 
-  return edges
-    .map(({ node }) => node)
-    .map(({ frontmatter, slug }) => ({ slug, ...frontmatter }));
+  return edges.map(({ node }) => node).map(({ frontmatter }) => ({ slug: frontmatter.slug, ...frontmatter }));
 };
 
 export default useLatestArticles;
