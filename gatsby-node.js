@@ -4,18 +4,20 @@ exports.createPages = ({ actions, graphql }) => {
   const articlesTemplate = require.resolve('./src/templates/article.tsx');
 
   return graphql(`
-    {
-      allMdx(
-        filter: {slug: {regex: "/articles/"}}
-        sort: {order: DESC, fields: [frontmatter___date]}
-      ) {
-        edges {
-          node {
+  {
+    allMdx(
+      filter: {frontmatter: {slug: {regex: "/articles/"}}}
+      sort: {order: DESC, fields: [frontmatter___date]}
+    ) {
+      edges {
+        node {
+          frontmatter {
             slug
           }
         }
       }
     }
+  }
   `).then(result => {
     if (result.errors) {
       return Promise.reject(result.errors);
@@ -23,10 +25,10 @@ exports.createPages = ({ actions, graphql }) => {
 
     return result.data.allMdx.edges.forEach(({ node }) => {
       createPage({
-        path: node.slug,
+        path: node.frontmatter.slug,
         component: articlesTemplate,
         context: {
-          slug: node.slug,
+          slug: node.frontmatter.slug,
         },
       });
     });

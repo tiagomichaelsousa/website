@@ -25,8 +25,7 @@ const MdxComponents = {
         css={{
           boxShadow: '$primary',
           display: 'block',
-          px: 'auto',
-          py: '$32 !important',
+          mx: 'auto',
           '@initial': {
             width: '100%',
           },
