@@ -75,11 +75,22 @@ module.exports = {
         },
       },
     },
-    // 'gatsby-plugin-mdx',
     {
       resolve: 'gatsby-plugin-mdx',
       options: {
         rehypePlugins: [rehypeHighlightCode],
+        plugins: ['gatsby-remark-images'],
+        gatsbyRemarkPlugins: [
+          {
+            resolve: 'gatsby-remark-images',
+            options: {
+              maxWidth: 900,
+              quality: 80,
+              withWebp: { quality: 80 },
+              withAvif: { quality: 80 },
+            },
+          },
+        ],
       },
     },
     'gatsby-plugin-sharp',
