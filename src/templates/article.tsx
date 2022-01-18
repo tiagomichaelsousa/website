@@ -35,6 +35,7 @@ const Article = (
 
   const {
     frontmatter: { title, date, dateFromNow, categories, authors, description, slug },
+    filepath,
     timeToRead,
     body,
     excerpt,
@@ -148,8 +149,8 @@ const Article = (
               Discuss on Twitter
             </Link>
             <Link
-              href={`https://github.com/tiagomichaelsousa/website/edit/main/data/${slug}.mdx`}
-              title={`https://github.com/tiagomichaelsousa/website/edit/main/data/${slug}.mdx`}
+              href={`https://github.com/tiagomichaelsousa/website/edit/main/data/${filepath}.mdx`}
+              title={`https://github.com/tiagomichaelsousa/website/edit/main/data/${filepath}.mdx`}
               target="_blank"
               variant="primary"
               rel="noreferrer"
@@ -221,6 +222,7 @@ export const pageQuery = graphql`
     mdx(frontmatter: { slug: { eq: $slug } }) {
       body
       timeToRead
+      filepath: slug
       excerpt(pruneLength: 160)
       frontmatter {
         date(formatString: "dddd, DD MMMM YYYY")
@@ -276,6 +278,7 @@ type ArticlePageProps = {
   body: string;
   timeToRead: number;
   excerpt: string;
+  filepath: string;
   frontmatter: {
     slug: string;
     date: string;

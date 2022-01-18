@@ -86,6 +86,7 @@ module.exports = {
             options: {
               maxWidth: 900,
               quality: 80,
+              linkImagesToOriginal: false,
               withWebp: { quality: 80 },
               withAvif: { quality: 80 },
             },
