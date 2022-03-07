@@ -10,7 +10,7 @@ const MdxComponents = {
   h3: (props: any) => <Heading size="3" css={{ mt: '$16', mb: '$8' }} {...props} />,
   h4: (props: any) => <Heading size="4" css={{ mt: '$16', mb: '$8' }} {...props} />,
   h5: (props: any) => <Heading size="5" css={{ mt: '$16', mb: '$8' }} {...props} />,
-  h6: (props: any) => <Heading size="6" css={{ mt: '$16', mb: '$8' }}  {...props} />,
+  h6: (props: any) => <Heading size="6" css={{ mt: '$16', mb: '$8' }} {...props} />,
   p: (props: any) => <Paragraph css={{ lh: '$40' }} {...props} />,
   a: ({ href = '', ...props }) => {
     if (href.startsWith('http')) {
@@ -38,7 +38,11 @@ const MdxComponents = {
     );
   },
   code: (props: any) => <Code {...props} />,
-  pre: ({ children }) => <Pre showLineNumbers={children.props.showLineNumbers}>{children}</Pre>,
+  pre: ({ children }) => (
+    <Pre showLineNumbers={children.props.showLineNumbers} theme={children.props.theme}>
+      {children}
+    </Pre>
+  ),
   ul: (props: any) => <List {...props} />,
   li: (props: any) => <ListItem {...props} />,
   blockquote: ({ children, ...props }) => (
