@@ -22,7 +22,6 @@ export const { styled, css, theme, createTheme, getCssText, globalCss, keyframes
       transparentPanel: 'hsl(0 0% 0% / 97%)',
       shadowLight: 'hsl(206 22% 7% / 35%)',
       shadowDark: 'hsl(206 22% 7% / 20%)',
-      foo: '#6059F8D9',
     },
     shadows: {
       primary: '0px 6px 24px rgba(126, 139, 255, 0.24)',

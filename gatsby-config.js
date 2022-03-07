@@ -20,6 +20,7 @@ module.exports = {
     '@paulkre/gatsby-transformer-svg',
     'gatsby-transformer-yaml',
     'gatsby-plugin-sitemap',
+    'gatsby-plugin-twitter',
     {
       resolve: 'gatsby-plugin-next-seo',
       options: {
