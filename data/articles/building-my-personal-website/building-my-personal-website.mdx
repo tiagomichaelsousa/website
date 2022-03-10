@@ -248,6 +248,25 @@ import { Box, Paragraph } from '@components';
 </Box>;
 ```
 
+- highlight a single word
+
+```jsx
+import { Box, Paragraph } from '@components';
+
+<Box css={{ bc: '$primary', btlr: '$4', btrr: '$4', py: '$16' }}>
+  <__Paragraph__ align="center">JAM</Paragraph>
+</Box>;
+```
+
+- use the diff syntax that we are used to in GitHub
+
+```diff
+return [
+-       'paths' => ['api/*', 'sanctum/csrf-cookie'],
++       'paths' => ['api/*', 'graphql', 'sanctum/csrf-cookie'],
+];
+```
+
 - enable and disable line numbers
 
 ```jsx showLineNumbers
@@ -342,7 +361,7 @@ FYI, configuring Stitches with Server-Side Rendering is really easy, please have
 
 Do you know the feeling of naming components and variables? Well, even for the domain of my website I had that problem!
 The main problem was more the TLD (Top Level Domain) than the hostname itself! I didn't know what to choose between `.dev`, `.me`, `.tech` or `.space` but I did know that
-`tiagomichaelsousa` would be the hostname mainly because I've this name for basically most of my dev related topics.
+`tiagomichaelsousa` would be the hostname mainly because I've this name for basically most of my dev related topics. Noticed that I just mentioned `dev` things? That's the reason why I choosed the `.dev` for the TLD.
 
 I tried to buy the domain from Google but, unfortunately, it's not possible to buy `.dev` domains from Google in Portugal, so I had to reach out to another provider.
 

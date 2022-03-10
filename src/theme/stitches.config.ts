@@ -213,6 +213,10 @@ export const { styled, css, theme, createTheme, getCssText, globalCss, keyframes
       height: value,
     }),
 
+    width: (value: Stitches.PropertyValue<'width'>) => ({
+      width: value,
+    }),
+
     appearance: (value: Stitches.PropertyValue<'appearance'>) => ({
       WebkitAppearance: value,
       appearance: value,
