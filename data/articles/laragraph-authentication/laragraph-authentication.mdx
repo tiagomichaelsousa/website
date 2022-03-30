@@ -1,0 +1,612 @@
+---
+title: '#1 - Laragraph Authentication - Laravel and GraphQL'
+date: '2022-03-30'
+image: thumbnail.jpeg
+slug: 'articles/laragraph-authentication'
+authors:
+  - tsousa
+description: |
+  This article is the first article of a serie that I'm writing about two main tools that I absolutely love! Laravel and GraphQL.
+  During this serie we will create a tipical blog application while exploring all the features available from Lighthouse, the tool that will add GraphQL support to our Laravel application.
+  Of course, testing will also be covered 🚀
+categories:
+  - Laravel
+  - GraphQL
+  - Testing
+  - Backend
+  - PHP
+---
+
+# Introduction
+
+When you are a Software Engineer you can't stop learning. You have to be always updated and learn new things whenever you can, otherwise you will get stalled.
+I already had the opportunity to work with [GraphQL](https://graphql.org/) while I developed this website that you are currently seing but I wanted to dig more into it,
+understand how could I create an applciation with a GraphQL API instead of a a tipical REST api.
+GraphQL has a great potential regarding the way that the client-facing applications request data, avoiding the management of huge amounts of payloads that are not needed
+and retreieving onyl what really matters.
+For this blog post I will show you how to create a brand new laravel application and integrate it with GraphQL while developing a blog post application.
+And, to put the cherry on top of the cake, we will go step by step and create the login functionality with [Laravel Sanctum](https://laravel.com/docs/9.x/sanctum).
+
+# Install and Configure your dependencies
+
+In order to create a new laravel application with a GraphQL API we will install and setup a couple of things before:
+
+- [Laravel](https://laravel.com/docs/9.x)
+- [Sail](https://laravel.com/docs/9.x/sail)
+- [Lighthouse](https://lighthouse-php.com/)
+- [Sanctum](https://laravel.com/docs/9.x/sanctum)
+
+#### Setting up Laravel
+
+Since we are using Laravel, we can take leverage from the Laravel CLI in order to create a brand new application.
+
+```
+laravel new laragraph
+```
+
+If you don't have the laravel CLI installed globally, take a look into all the possible ways that you can create a new laravel application [from the documentation](https://laravel.com/docs/9.x)
+
+#### Setting up Sail
+
+[Sail](https://laravel.com/docs/9.x/sail) is one of the products developed by the [laravel team](https://laravel.com/team) and is one of the most important tools from its ecosystem (in my opinion) since it allows
+to containerize, with [Docker](https://www.docker.com/), your application to ensure the same development environment for your team.
+With a couple of commands you can have your environment ready without installing tools on your machine.
+
+You can install Sail as a `dev` dependency for your laravel application by running:
+
+```
+composer require laravel/sail --dev
+```
+
+Since we are using docker to run the development environment, we need a docker file, right?
+In order to have access to this docker file, and after installing the sail dependency from the previous command, you can run the `sail:install` command.
+
+```
+php artisan sail:install
+```
+
+When running this command, the only thing that will be asked is to choose the kind of database that you want for your application.
+
+Finally, you can run Sail in detached mode to boot your application
+
+```
+./vendor/bin/sail up -d
+```
+
+At this point, you should, and must, have access to your laravel application at `http://localhost`.
+
+Sail will be installed as a `dev` dependency, so you will always have access to the CLI from the project directory but it's kind of annoying being always
+writing `./vendor/bin/sail` in your terminal each time that you want to use the Sail CLI to interact with your application.
+For that, you can easily create an alias within your bash profile like bellow:
+
+```
+alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
+```
+
+With this alias, you can run the Sail CLI and interact with your artisan commands, just by typing `sail`.
+As an example, you run your application with:
+
+```
+sail up -d
+```
+
+From now on, we will always use the `sail` command each time that we want to interact with any kind of CLI in our application.
+But this article isn't about Sail, so if you want to learn a little but more about it, feel free to have a look in the [delightful documentation](https://laravel.com/docs/9.x/sail) that the laravel team created.
+
+#### Setting up Lighthouse
+
+If you read my previous article, you read somewhere the word `lighthouse`. Even if they have the same name, they aren't the same tool.
+The [Lighthouse](https://lighthouse-php.com/) that we will talk about today is a package for Laravel that will help you creating and maintaining Laravel application with GraphQL API's.
+
+Let's start by installing Lighthouse with composer:
+
+```
+sail composer require nuwave/lighthouse
+```
+
+and publish the default GraphQL schema that will be available at `graphql/schema.graphql` in your project directory:
+
+```
+sail artisan vendor:publish --tag=lighthouse-schema
+```
+
+By default, this package doesn't bring [GraphQL Playground](https://github.com/mll-lab/laravel-graphql-playground) but you can easily add it to your dev environment with:
+
+```
+sail composer require mll-lab/laravel-graphql-playground
+```
+
+After this, you should have access to the playground at `http://localhost/graphql-playground`.
+
+Lighthouse comes with a lot of configurations by default but you can publish this file and edit the configuration for whats suits you the best:
+
+```
+sail artisan vendor:publish --tag=lighthouse-config
+```
+
+This configuration file will be published at `config/lighthouse.php` in your application directory.
+
+To finish Lighthouse configuration, we just need to enable the CORS (Cross-Origin Resource Sharing) for your GraphQL endpoints at `config/cors.php` by changing the `path` value:
+
+```diff
+return [
+-       'paths' => ['api/*', 'sanctum/csrf-cookie'],
++       'paths' => ['api/*', 'graphql', 'sanctum/csrf-cookie'],
+];
+```
+
+#### Setting up Sanctum
+
+And again, Laravel ecosystem shining 💫
+
+[Sanctum](https://laravel.com/docs/9.x/sanctum) provides a full authentication system for SPAs, mobile applications and simple token based system.
+Sanctum allows every user to create multiple API tokens for their account while granting abilities/scopes to each token.
+Do you know that feature from GitHub when you create a [PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+(Personal Access Token) and you grant privileges to that token? Sanctum allows you to do that in a really easily way while also providing multiple authentication systems.
+
+For this serie of articles, we will use Sanctum for our authentication system to authenticate users with our GraphQL API.
+
+As we did previously, we will use `sail` CLI to install Sanctum by executing the following command in your terminal
+
+```
+sail composer require laravel/sanctum
+```
+
+Next, we will need to publish Sanctum configuration file:
+
+```
+sail artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+```
+
+and migrate our database
+
+```
+sail artisan migrate
+```
+
+The last step regarding Sanctum is to ensure that your `User` model uses the `HasApiTokens` trait;
+
+```php showLineNumbers
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+__use Laravel\Sanctum\HasApiTokens__;
+
+class User extends Authenticatable
+{
+    use __HasApiTokens__, HasFactory, Notifiable;
+
+    ...
+}
+```
+
+The last configuration that is missing regarding Sanctum is to update the `guard` from `api` to `sanctum` in lighthouse configuration.
+To do that, go to you `config/lightouse.php` and update your guard like bellow:
+
+```diff
+return [
+-       'guard' => 'api',
++       'guard' => 'sanctum',
+];
+```
+
+# Our first endpoint
+
+Now that we have everything that we need installed and configured to run our application, let's get our hands dirty, shall we?
+
+##### Updating our GraphQL Schema
+
+The first thing that we will do is to add API authentication in order to allow users to login into their accounts.
+Typically, when you are developing a REST API, you start by defining your API endpoint. In GraphQL you only have **one endpoint** that will be used to run [Queries](https://graphql.org/learn/queries/#fields) and [Mutations](https://graphql.org/learn/queries/#mutations).
+Every "endpoint" is should be present in our GraphQL schema, so let's start by creating our login mutation.
+
+```graphql showLineNumbers
+type AccessToken {
+  token: String!
+}
+
+input LoginInput {
+  email: String! @rules(apply: ["email"])
+  password: String!
+}
+
+extend type Mutation {
+  login(input: LoginInput @spread): AccessToken! @field(resolver: "App\\GraphQL\\Mutations\\AuthMutation@login")
+}
+```
+
+##### Developing our first mutation
+
+To create our mutation, let's take leverage of Lighthouse and run the following command in our terminal.
+
+```
+sail artisan lighthouse:mutation AuthMutation
+```
+
+After running this command, you should have a new `AuthMutation.php` file under `app\GraphQL\Mutations`.
+This mutation will be the responsible adding the logic to login a user with email and password.
+
+```php showLineNumbers
+namespace App\GraphQL\Mutations;
+
+use Illuminate\Auth\AuthManager;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Nuwave\Lighthouse\Exceptions\AuthenticationException;
+
+
+class AuthMutation
+{
+    public function __construct(private AuthManager $authManager)
+    {
+    }
+
+    public function login($_, array $args)
+    {
+        $userProvider = $this->authManager->createUserProvider('users');
+
+        $user = $userProvider->retrieveByCredentials([
+            'email'    => $args['email'],
+            'password' => $args['password'],
+        ]);
+
+        if (!$user || !$userProvider->validateCredentials($user, $args)) {
+            throw new AuthenticationException('The provided credentials are incorrect.');
+        }
+
+        if ($user instanceof MustVerifyEmail && !$user->hasVerifiedEmail()) {
+            throw new AuthenticationException('Your email address is not verified.');
+        }
+
+        return [
+            'token' => $user->createToken('login')->plainTextToken,
+        ];
+    }
+}
+```
+
+Of course, if we are trying to login a user we need to have a user persisted in our database.
+Since we don't have any endpoint that allows us to create a user, let's take leverage from [Laravel Tinker](https://laravel.com/docs/9.x/artisan#tinker)
+in order to interact with our application directly from our terminal.
+
+```
+sail artisan tinker
+```
+
+With Tinker you are able to run PHP code directly from your terimnal which allows you to execute class methods.
+With that said, we can easily create a new user with the `UserFactory` that comes with Laravel default installation:
+
+```php
+>>> User::factory()->create(['email' => 'foo@bar.baz']);
+```
+
+The output of this command should be a new instance of the `User::class` and since we called the `create()` method the data should be persisted in our database.
+
+```php
+[!] Aliasing 'User' to 'App\Models\User' for this Tinker session.
+=> App\Models\User {#3616
+     name: "Juvenal Jerde III",
+     email: "foo@bar.baz",
+     email_verified_at: "2022-03-08 21:03:55",
+     #password: "$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+     #remember_token: "3e332qpLIt",
+     updated_at: "2022-03-08 21:03:55",
+     created_at: "2022-03-08 21:03:55",
+     id: 1,
+   }
+>>>
+```
+
+##### Let's request!
+
+At this point, we already have:
+
+- a user persisted in our database;
+- login mutation defined in our GraphQL schema;
+- the login logic defined in our `AuthMutation`.
+
+With all of this done, let's finally try to make the request by accessing our playground (`http://localhost/graphql-playground`) and running the mutation!
+
+```graphql showLineNumbers
+mutation {
+  login(input: { email: "foo@bar.baz", password: "password" }) {
+    token
+  }
+}
+```
+
+The output should be something similar to this, a brand new token that identifies the `foo@bar.baz` user and allow to make authenticated requests:
+
+```json
+{
+  "data": {
+    "login": {
+      "token": "1|idCdwe3Jt4mwwRryk9REU3mcd3yy6llBblIeAt5v"
+    }
+  }
+}
+```
+
+##### whoami
+
+To ensure that this token really identifies a user and allows him to make authenticated requests let's update our schema again 😎
+Lighthouse provides a simple way to get the logged user information by adding the following query:
+
+```graphql
+type Query {
+  me: User @auth
+}
+```
+
+Let's now make the request to the query that we just added to our schema:
+
+```graphql
+{
+  me {
+    name
+    email
+  }
+}
+```
+
+Sending the query to our graphql playground may have **two** outcomes:
+
+- the data of the User if the request is authenticated;
+- null if the request is not authenticated.
+
+You can test both cases but, in order to get the data of the user that is identified by the token, we need to add the `Bearer` token to the `Authorization` Header:
+
+```json
+{
+  "Authorization": "Bearer idCdwe3Jt4mwwRryk9REU3mcd3yy6llBblIeAt5v"
+}
+```
+
+![Login](./graphql-playground-login.png)
+
+# Give me some tests, please? 🥺
+
+When we talk about tests in the PHP world, the first thing that crosses our minds is [PHPUnit](https://phpunit.de/) but, recently, someone joined the party! 🎉 🥳
+This new player is called [Pest](https://pestphp.com/) and it's a framework built on top of PHPUnit with a syntax very similar to [Jest](https://jestjs.io/), the javascript testing framework.
+
+import { Box, Paragraph, Flex, Heading } from '@components';
+
+<Flex
+  align="center"
+  justify="between"
+  css={{
+    my: '$32',
+  }}
+>
+  <Box css={{ bc: '$secondary', br: '$4', py: '$16', width: '100%' }}>
+    <Paragraph align="center">PHP</Paragraph>
+  </Box>
+  <Box css={{ py: '$16', width: '100%' }}>
+    <Heading size="4" align="center">
+      +
+    </Heading>
+  </Box>
+  <Box css={{ bc: '$secondary', br: '$4', py: '$16', width: '100%' }}>
+    <Paragraph align="center">JEST</Paragraph>
+  </Box>
+  <Box css={{ py: '$16', width: '100%' }}>
+    <Heading size="4" align="center">
+      =
+    </Heading>
+  </Box>
+  <Box css={{ bc: '$secondary', br: '$4', py: '$16', width: '100%' }}>
+    <Paragraph align="center">PEST</Paragraph>
+  </Box>
+</Flex>
+
+#### Installing Pest
+
+For this serie, we will use Pest to write our tests and the first one that we will write is for our login functionality.
+But first, we need to setup Pest for our application!
+
+- Delete old test PHPUnit tests
+
+```
+rm tests/Unit/ExampleTest.php
+```
+
+```
+rm tests/Feature/ExampleTest.php
+```
+
+- Install Pest via Composer and Sail
+
+```
+sail composer require pestphp/pest --dev --with-all-dependencies
+```
+
+- Since we are using Laravel, let's install Pest plugin for the framework
+
+```
+sail composer require pestphp/pest-plugin-laravel --dev
+```
+
+- Install Pest for our project
+
+```
+sail artisan pest:install
+```
+
+- Run our tests
+
+```
+sail artisan test
+```
+
+#### Configuring our testing environment
+
+Now that we have Pest installed, let's configure our test environment.
+One of the most important things when we develop and run tests is to ensure that the environment is clean in order to not create dependency between tests.
+
+Laravel facilitates a lot this configuration! To configure and enable a clean environment for every test you just need to **update two files**.
+The first one is the `phpunit.xml` that is in the **root directory of your application** and the other one is the `TestCase.php` that is under your **test directory**.
+
+When you run your tests, you don't want them to mess up with the same database that you use for development environment and since we don't want to preserve the data between
+test why not just using a `in-memory` `sqlite` database?
+For that, go to your `phpunit.xml` and add the following configuration:
+
+```xml showLineNumbers line=5-6
+<php>
+    <env name="APP_ENV" value="testing"/>
+    <env name="BCRYPT_ROUNDS" value="4"/>
+    <env name="CACHE_DRIVER" value="array"/>
+    <env name="DB_CONNECTION" value="sqlite"/>
+    <env name="DB_DATABASE" value=":memory:"/>
+    <env name="MAIL_MAILER" value="array"/>
+    <env name="QUEUE_CONNECTION" value="sync"/>
+    <env name="SESSION_DRIVER" value="array"/>
+    <env name="TELESCOPE_ENABLED" value="false"/>
+</php>
+```
+
+And that's it! You don't need to configure the database connection because, by default, Laravel already brings a sqlite database connection configured.
+Now that we already have our database configured when we run our tests, let's ensure that every time that a test run, it run in a clean environment without any data persisted.
+In order to achieve this goal, go to your `tests/TestCase.php` file and add the `RefreshDatabase` from `Illuminate\Foundation\Testing\RefreshDatabase`.
+If you want to know more about this `Trait` feel free to have a look into [Laravel Docummentation](https://laravel.com/docs/5.7/database-testing#resetting-the-database-after-each-test).
+
+After the database configuration for our test environment, we still have to make a couple of configurations for Lighthouse to have some GraphQL helper functions when we write our tests.
+As it is written in [Lighthouse Docummentation](https://lighthouse-php.com/5/testing/phpunit.html#setup), we have to use the `MakesGraphQLRequests` and `RefreshesSchemaCache` traits.
+Also, we have to call `bootRefreshesSchemaCache()` method in our class setup.
+We can do this in our `TestCase.php` file since it will be called every time that tests are running.
+
+After this configuration, your `TestCase.php` should be something very similar to:
+
+```diff
+ namespace Tests;
+
+ use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
++   use Nuwave\Lighthouse\Testing\MakesGraphQLRequests;
++   use Nuwave\Lighthouse\Testing\RefreshesSchemaCache;
++   use Illuminate\Foundation\Testing\RefreshDatabase;
+
+ abstract class TestCase extends BaseTestCase
+ {
+      use CreatesApplication;
++        use MakesGraphQLRequests;
++        use RefreshesSchemaCache;
++        use RefreshDatabase;
+
++        protected function setUp(): void
++        {
++            parent::setUp();
++            $this->bootRefreshesSchemaCache();
++        }
+ }
+```
+
+#### Writting our login tests
+
+When we installed Pest, a couple of commands were added to our artisan command. One of them allows us to create a test file to write our tests in Pest.
+You can run the following artisan command to create a test file:
+
+```
+sail artisan pest:test LoginTest
+```
+
+In order to not make the this article too extensive, I will show you how you create a test for that:
+
+- ensures a successfully user login;
+- ensures that it returns an error when credentials are wrong;
+- retrieves the information about the logged user.
+
+Of course, more tests will be written for this application but you can dig into them directly from [GitHub](TODO)
+
+###### Ensures a successfully user login
+
+```php
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Sanctum\Sanctum;;
+
+it('allows a user to login successfully', function () {
+    $user =  User::factory()->create([
+        'email' => 'foo@bar.baz',
+        'password' => Hash::make('password')
+    ]);
+
+    $this->graphQL(/** @lang GraphQL */'
+        mutation ($email: String!, $password: String!) {
+            login(input: { email: $email, password: $password }) {
+                token
+            }
+        }',
+        [
+            'email' => $user->email,
+            'password' => 'password'
+        ]
+    )->assertJsonStructure([
+        'data' => [
+            'login' => [
+                'token',
+            ],
+        ],
+    ]);
+});
+```
+
+###### Ensures that it returns an error when credentials are wrong
+
+```php
+it('throws an error when credentials are invalid', function () {
+    $this->graphQL(/** @lang GraphQL */'
+            mutation {
+                login(input: {
+                    email: "foo@bar.com",
+                    password: "supersecret"
+                }) {
+                    token
+                }
+            }'
+    )->assertGraphQLErrorMessage('The provided credentials are incorrect.');
+});
+```
+
+###### Retrieves the information about the logged user
+
+```php
+it('retrieves logged in user information', function () {
+    $user = Sanctum::actingAs(User::factory()->create());
+
+    $this->graphQL(/** @lang GraphQL */'
+        {
+            me {
+                email
+            }
+        }
+    ')->assertJson([
+        'data' => [
+            'me' => [
+                'email' => $user->email,
+            ],
+        ],
+    ]);
+});
+```
+
+These aren't the only tests that were developed but to don't get too extensive (sorry it's already too extensive actually 😅) you can have a look at the [GitHub repository](https://github.com/tiagomichaelsousa/laragraph/blob/main/tests/Feature/LoginTest.php)
+
+Since this serie will be a very simple intro to Laravel and GraphQL, we will not develop the entire registration flow.
+Based on your stack for authentication (Sanctum or Passport) there are a couple of open-source packages that offer authentication
+out of the box:
+
+- [Laravel Passport](https://lighthouse-php-auth.com/)
+- [Laravel Sanctum](https://github.com/daniel-de-wit/lighthouse-sanctum)
+
+## Conclusions
+
+This was the **first part** of a series that I will be writing while I explore these tools.
+I hope that this article can help someone in the future that is trying to develop a GraphQL API with Laravel!
+
+For each article I will attach a PR so you can view all the changes! For this one, feel free to check it [here](https://github.com/tiagomichaelsousa/laragraph/pull/1).
+
+If you found this article interesting, feel free to share it with your colleagues or friends, because you know... Sharing
+is caring!
+
+Also, if you enjoy working at a large scale in projects with global impact and if you enjoy a challenge, please reach
+out to us at [xgeeks](https://xgeeks.io/)! We're always looking for talented people to join our team 🙌
