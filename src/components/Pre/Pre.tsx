@@ -1,7 +1,7 @@
 import { styled } from '@theme/stitches.config';
 
 export const Pre = styled('pre', {
-  $$background: '#6059f815',
+  $$background: '#6059f810',
   $$text: '$colors$white',
   $$syntax1: '#79A9FF',
   $$syntax2: '#B8EB80',
@@ -9,7 +9,7 @@ export const Pre = styled('pre', {
   $$syntax4: '#6DDFFF',
   $$comment: '$colors$gray',
   $$removed: 'red',
-  $$added: 'purple',
+  $$added: 'green',
   $$lineNumbers: '$colors$gray',
   $$fadedLines: '$colors$gray',
   $$highlightedWordBg: 'hsl(243deg 92% 66% / 30%)',
