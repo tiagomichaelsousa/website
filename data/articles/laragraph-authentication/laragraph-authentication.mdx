@@ -21,7 +21,7 @@ categories:
 
 When you are a Software Engineer you can't stop learning. You have to be always updated and learn new things whenever you can, otherwise you will get stalled.
 I already had the opportunity to work with [GraphQL](https://graphql.org/) while I developed this website that you are currently seing but I wanted to dig more into it,
-understand how could I create an application with a GraphQL API instead of a a typical REST api.
+understand how could I create an application with a GraphQL API instead of a typical REST api.
 GraphQL has a great potential regarding the way that the client-facing applications request data, avoiding the management of huge amounts of payloads that are not needed
 and retrieving only what really matters.
 For this blog post I will show you how to create a brand new laravel application and integrate it with GraphQL while developing a blog post application.
@@ -442,13 +442,13 @@ sail artisan test
 #### Configuring our testing environment
 
 Now that we have Pest installed, let's configure our test environment.
-One of the most important things when we develop and run tests is to ensure that the environment is clean in order to not create dependency between tests.
+One of the most important things when we develop and run tests is to ensure that the environment is clean in order to not create dependencies between tests.
 
 Laravel facilitates a lot this configuration! To configure and enable a clean environment for every test you just need to **update two files**.
 The first one is the `phpunit.xml` that is in the **root directory of your application** and the other one is the `TestCase.php` that is under your **test directory**.
 
 When you run your tests, you don't want them to mess up with the same database that you use for development environment and since we don't want to preserve the data between
-test why not just using a `in-memory` `sqlite` database?
+tests why not just use an `in-memory` `sqlite` database?
 For that, go to your `phpunit.xml` and add the following configuration:
 
 ```xml showLineNumbers line=5-6
