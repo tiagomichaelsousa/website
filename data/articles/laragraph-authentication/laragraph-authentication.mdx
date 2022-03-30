@@ -38,7 +38,7 @@ In order to create a new laravel application with a GraphQL API we will install 
 
 #### Setting up Laravel
 
-Since we are using Laravel, we can take leverage from the Laravel CLI in order to create a brand new application.
+Since we are using Laravel, we leverage the Laravel CLI in order to create a brand new application.
 
 ```
 laravel new laragraph
@@ -118,7 +118,7 @@ sail composer require mll-lab/laravel-graphql-playground
 
 After this, you should have access to the playground at `http://localhost/graphql-playground`.
 
-Lighthouse comes with a lot of configurations by default but you can publish this file and edit the configuration for whats suits you the best:
+Lighthouse comes with a lot of configurations by default but you can publish this file and edit the configuration for what suits you the best:
 
 ```
 sail artisan vendor:publish --tag=lighthouse-config
@@ -219,7 +219,7 @@ extend type Mutation {
 
 ##### Developing our first mutation
 
-To create our mutation, let's take leverage of Lighthouse and run the following command in our terminal.
+To create our mutation, let's take advantage of Lighthouse and run the following command in our terminal.
 
 ```
 sail artisan lighthouse:mutation AuthMutation
@@ -267,14 +267,14 @@ class AuthMutation
 ```
 
 Of course, if we are trying to login a user we need to have a user persisted in our database.
-Since we don't have any endpoint that allows us to create a user, let's take leverage from [Laravel Tinker](https://laravel.com/docs/9.x/artisan#tinker)
-in order to interact with our application directly from our terminal.
+Since we don't have any endpoint that allows us to create a user, let's use [Laravel Tinker](https://laravel.com/docs/9.x/artisan#tinker)
+to interact with our application directly from our terminal.
 
 ```
 sail artisan tinker
 ```
 
-With Tinker you are able to run PHP code directly from your terimnal which allows you to execute class methods.
+With Tinker you are able to run PHP code directly from your terminal which allows you to execute class methods.
 With that said, we can easily create a new user with the `UserFactory` that comes with Laravel default installation:
 
 ```php
@@ -466,7 +466,7 @@ For that, go to your `phpunit.xml` and add the following configuration:
 ```
 
 And that's it! You don't need to configure the database connection because, by default, Laravel already brings a sqlite database connection configured.
-Now that we already have our database configured when we run our tests, let's ensure that every time that a test run, it run in a clean environment without any data persisted.
+Now that we already have our database configured when we run our tests, let's ensure that every time that a test runs, it runs in a clean environment without any data persisted.
 In order to achieve this goal, go to your `tests/TestCase.php` file and add the `RefreshDatabase` from `Illuminate\Foundation\Testing\RefreshDatabase`.
 If you want to know more about this `Trait` feel free to have a look into [Laravel Docummentation](https://laravel.com/docs/5.7/database-testing#resetting-the-database-after-each-test).
 
