@@ -6,8 +6,8 @@ slug: 'articles/laragraph-laravel-and-graphql-part-1'
 authors:
   - tsousa
 description: |
-  This article is the first article of a serie that I'm writing about two main tools that I absolutely love! Laravel and GraphQL.
-  During this serie we will create a tipical blog application while exploring all the features available from Lighthouse, the tool that will add GraphQL support to our Laravel application.
+  This article is the first article of a series that I'm writing about two main tools that I absolutely love! Laravel and GraphQL.
+  During this series we will create a typical blog application while exploring all the features available from Lighthouse, the tool that will add GraphQL support to our Laravel application.
   Of course, testing will also be covered 🚀
 categories:
   - Laravel
@@ -21,9 +21,9 @@ categories:
 
 When you are a Software Engineer you can't stop learning. You have to be always updated and learn new things whenever you can, otherwise you will get stalled.
 I already had the opportunity to work with [GraphQL](https://graphql.org/) while I developed this website that you are currently seing but I wanted to dig more into it,
-understand how could I create an applciation with a GraphQL API instead of a a tipical REST api.
+understand how could I create an application with a GraphQL API instead of a a typical REST api.
 GraphQL has a great potential regarding the way that the client-facing applications request data, avoiding the management of huge amounts of payloads that are not needed
-and retreieving onyl what really matters.
+and retrieving only what really matters.
 For this blog post I will show you how to create a brand new laravel application and integrate it with GraphQL while developing a blog post application.
 And, to put the cherry on top of the cake, we will go step by step and create the login functionality with [Laravel Sanctum](https://laravel.com/docs/9.x/sanctum).
 
@@ -75,9 +75,9 @@ Finally, you can run Sail in detached mode to boot your application
 
 At this point, you should, and must, have access to your laravel application at `http://localhost`.
 
-Sail will be installed as a `dev` dependency, so you will always have access to the CLI from the project directory but it's kind of annoying being always
-writing `./vendor/bin/sail` in your terminal each time that you want to use the Sail CLI to interact with your application.
-For that, you can easily create an alias within your bash profile like bellow:
+Sail will be installed as a `dev` dependency, so you will always have access to the CLI from the project directory but it's kind of annoying always having to write
+`./vendor/bin/sail` in your terminal each time that you want to use the Sail CLI to interact with your application.
+or that, you can easily create an alias within your bash profile like below:
 
 ```
 alias sail='[ -f sail ] && bash sail || bash vendor/bin/sail'
@@ -144,7 +144,7 @@ Sanctum allows every user to create multiple API tokens for their account while 
 Do you know that feature from GitHub when you create a [PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
 (Personal Access Token) and you grant privileges to that token? Sanctum allows you to do that in a really easily way while also providing multiple authentication systems.
 
-For this serie of articles, we will use Sanctum for our authentication system to authenticate users with our GraphQL API.
+For this series of articles, we will use Sanctum for our authentication system to authenticate users with our GraphQL API.
 
 As we did previously, we will use `sail` CLI to install Sanctum by executing the following command in your terminal
 
@@ -183,7 +183,7 @@ class User extends Authenticatable
 ```
 
 The last configuration that is missing regarding Sanctum is to update the `guard` from `api` to `sanctum` in lighthouse configuration.
-To do that, go to you `config/lightouse.php` and update your guard like bellow:
+To do that, go to you `config/lightouse.php` and update your guard like below:
 
 ```diff
 return [
@@ -192,7 +192,7 @@ return [
 ];
 ```
 
-# Our first endpoint
+# Our first "endpoint"
 
 Now that we have everything that we need installed and configured to run our application, let's get our hands dirty, shall we?
 
@@ -200,7 +200,7 @@ Now that we have everything that we need installed and configured to run our app
 
 The first thing that we will do is to add API authentication in order to allow users to login into their accounts.
 Typically, when you are developing a REST API, you start by defining your API endpoint. In GraphQL you only have **one endpoint** that will be used to run [Queries](https://graphql.org/learn/queries/#fields) and [Mutations](https://graphql.org/learn/queries/#mutations).
-Every "endpoint" is should be present in our GraphQL schema, so let's start by creating our login mutation.
+Every "endpoint" should be present in our GraphQL schema, so let's start by creating our login mutation.
 
 ```graphql showLineNumbers
 type AccessToken {
@@ -402,7 +402,7 @@ import { Box, Paragraph, Flex, Heading } from '@components';
 
 #### Installing Pest
 
-For this serie, we will use Pest to write our tests and the first one that we will write is for our login functionality.
+For this series, we will use Pest to write our tests and the first one that we will write is for our login functionality.
 But first, we need to setup Pest for our application!
 
 - Delete old test PHPUnit tests
@@ -591,7 +591,7 @@ it('retrieves logged in user information', function () {
 
 These aren't the only tests that were developed but to don't get too extensive (sorry it's already too extensive actually 😅) you can have a look at the [GitHub repository](https://github.com/tiagomichaelsousa/laragraph/blob/main/tests/Feature/LoginTest.php)
 
-Since this serie will be a very simple intro to Laravel and GraphQL, we will not develop the entire registration flow.
+Since this series will be a very simple intro to Laravel and GraphQL, we will not develop the entire registration flow.
 Based on your stack for authentication (Sanctum or Passport) there are a couple of open-source packages that offer authentication
 out of the box:
 
