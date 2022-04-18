@@ -5,15 +5,15 @@ const useSiteMetadata = (): SiteMetadata => {
   const {
     site: { siteMetadata },
   } = useStaticQuery(graphql`
-      query SiteMetadata {
-          site {
-              siteMetadata {
-                  title
-                  description
-                  siteUrl
-              }
-          }
+    query SiteMetadata {
+      site {
+        siteMetadata {
+          title
+          description
+          siteUrl
+        }
       }
+    }
   `);
 
   return siteMetadata;

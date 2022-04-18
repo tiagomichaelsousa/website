@@ -28,9 +28,7 @@ import useSiteMetadata from '@hooks/useSiteMetadata';
 import { GatsbySeo } from 'gatsby-plugin-next-seo';
 import { Author } from '@types/Author';
 
-const Article = (
-  { data: { mdx } }: PageProps<{ mdx: ArticlePageProps }>,
-) => {
+const Article = ({ data: { mdx } }: PageProps<{ mdx: ArticlePageProps }>) => {
   const { siteUrl } = useSiteMetadata();
 
   const {

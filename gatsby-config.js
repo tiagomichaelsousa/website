@@ -130,7 +130,7 @@ module.exports = {
       resolve: 'gatsby-plugin-alias-imports',
       options: {
         alias: {
-          'components': './src/components/',
+          components: './src/components/',
           '@components': './src/components/',
           '@utils': './src/utils/',
           '@sections': './src/sections/',

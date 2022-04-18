@@ -13,8 +13,8 @@ type Content = {
   icon: {
     childSvg: {
       content: {
-        data: string
-      }
-    }
+        data: string;
+      };
+    };
   };
 };

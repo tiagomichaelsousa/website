@@ -9,19 +9,19 @@ const useTheme = () => {
 
   useEffect(() => {
     const currentTheme = localStorage.getItem(THEME_KEY);
-  
+
     if (!currentTheme) {
       setTheme(LIGHT_THEME_KEY);
     } else {
       setTheme(currentTheme);
     }
   }, []);
-  
+
   useEffect(() => {
     document.body.classList.remove(LIGHT_THEME_KEY, darkTheme);
     document.body.classList.add(theme);
   }, [theme]);
-  
+
   const handleThemeChange = useCallback(() => {
     const currentTheme = theme === LIGHT_THEME_KEY ? darkTheme : LIGHT_THEME_KEY;
     setTheme(currentTheme);

@@ -1,6 +1,5 @@
 import React from 'react';
-import { Container } from 'components/Container/Container';
-import { Button, Flex, Heading, Paragraph } from '@components';
+import { Button, Flex, Heading, Paragraph, Container } from '@components';
 import { ArrowRightIcon } from '@radix-ui/react-icons';
 import { StaticImage } from 'gatsby-plugin-image';
 import usePersonalInfo from '@hooks/usePersonalInfo';

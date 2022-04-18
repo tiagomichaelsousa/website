@@ -2,8 +2,7 @@ import React from 'react';
 import { Box, Carousel, Container, Flex, Link, Paragraph, Svg } from '@components';
 import { StaticImage } from 'gatsby-plugin-image';
 import useTechnologies from '@hooks/useTechnologies';
-import {  SwiperSlide } from 'swiper/react';
-
+import { SwiperSlide } from 'swiper/react';
 
 const Technologies: React.FC = () => {
   const technologies = useTechnologies();

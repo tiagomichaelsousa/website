@@ -8,11 +8,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: [
-    'plugin:react/recommended',
-    'airbnb-typescript',
-    'plugin:react-hooks/recommended',
-  ],
+  extends: ['plugin:react/recommended', 'airbnb-typescript', 'plugin:react-hooks/recommended', 'prettier'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json',
@@ -22,11 +18,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: [
-    'react',
-    'import',
-    '@typescript-eslint',
-  ],
+  plugins: ['react', 'import', '@typescript-eslint'],
   rules: {
     'react/prop-types': 0,
     'react/display-name': 0,
