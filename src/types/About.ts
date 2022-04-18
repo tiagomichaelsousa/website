@@ -11,10 +11,8 @@ type Content = {
   title: string;
   description: string;
   icon: {
-    childSvg: {
-      content: {
-        data: string
-      }
-    }
+    svg: {
+      content: string;
+    };
   };
 };

@@ -42,7 +42,7 @@ const lineNumberify = function lineNumberify(ast, lineNum = 1) {
       result.nodes.push(node);
       return result;
     },
-    { nodes: [], lineNumber: lineNumber },
+    { nodes: [], lineNumber: lineNumber }
   );
 };
 
@@ -95,9 +95,7 @@ const applyMultilineFix = function (ast) {
   let html = hastToHtml(ast);
 
   // Fix JSX issue
-  html = html.replace(MULTILINE_TOKEN_SPAN, (match, token) =>
-    match.replace(/\n/g, `</span>\n<span class="token ${token}">`),
-  );
+  html = html.replace(MULTILINE_TOKEN_SPAN, (match, token) => match.replace(/\n/g, `</span>\n<span class="token ${token}">`));
 
   // HTML to AST
   const hast = unified().use(parse, { emitParseErrors: true, fragment: true }).parse(html);

@@ -17,7 +17,7 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-robots-txt',
     'gatsby-plugin-netlify',
-    '@paulkre/gatsby-transformer-svg',
+    'gatsby-transformer-inline-svg',
     'gatsby-transformer-yaml',
     'gatsby-plugin-sitemap',
     'gatsby-plugin-twitter',
@@ -130,7 +130,7 @@ module.exports = {
       resolve: 'gatsby-plugin-alias-imports',
       options: {
         alias: {
-          'components': './src/components/',
+          components: './src/components/',
           '@components': './src/components/',
           '@utils': './src/utils/',
           '@sections': './src/sections/',
@@ -148,21 +148,6 @@ module.exports = {
       options: {
         trackingId: process.env.GOOGLE_ANALYTICS,
         head: true,
-      },
-    },
-    {
-      resolve: 'gatsby-plugin-prettier-eslint',
-      options: {
-        prettier: {
-          patterns: ['**/*.{css,scss,less}', '**/*.{json,json5}', '**/*.{graphql}', '**/*.{md,mdx}', '**/*.{html}', '**/*.{yaml,yml}'],
-        },
-        eslint: {
-          patterns: '**/*.{js,jsx,ts,tsx}',
-          customOptions: {
-            fix: true,
-            cache: true,
-          },
-        },
       },
     },
   ],

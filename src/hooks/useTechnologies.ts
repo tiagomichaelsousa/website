@@ -13,10 +13,8 @@ const useTechnologies = (): Technology[] => {
             url
             color
             logo {
-              childSvg {
-                content {
-                  data
-                }
+              svg {
+                content
               }
             }
           }

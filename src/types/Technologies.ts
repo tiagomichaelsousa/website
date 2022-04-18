@@ -1,11 +1,9 @@
 export type Technology = {
   name: string;
   logo: {
-    childSvg: {
-      content: {
-        data: string
-      }
-    }
+    svg: {
+      content: string;
+    };
   };
   color: string;
   url: string;

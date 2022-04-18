@@ -2,8 +2,7 @@ import React from 'react';
 import { Box, Carousel, Container, Flex, Link, Paragraph, Svg } from '@components';
 import { StaticImage } from 'gatsby-plugin-image';
 import useTechnologies from '@hooks/useTechnologies';
-import {  SwiperSlide } from 'swiper/react';
-
+import { SwiperSlide } from 'swiper/react';
 
 const Technologies: React.FC = () => {
   const technologies = useTechnologies();
@@ -48,7 +47,7 @@ const Technologies: React.FC = () => {
               <Link href={technology.url} title={technology.url} target="_blank" rel="noreferrer">
                 <Svg
                   css={{ fill: technology?.color, color: technology?.color }}
-                  dangerouslySetInnerHTML={{ __html: technology.logo.childSvg.content.data }}
+                  dangerouslySetInnerHTML={{ __html: technology.logo.svg.content }}
                   size="64"
                 />
               </Link>

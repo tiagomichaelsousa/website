@@ -4,21 +4,18 @@ exports.createPages = ({ actions, graphql }) => {
   const articlesTemplate = require.resolve('./src/templates/article.tsx');
 
   return graphql(`
-  {
-    allMdx(
-      filter: {frontmatter: {slug: {regex: "/articles/"}}}
-      sort: {order: DESC, fields: [frontmatter___date]}
-    ) {
-      edges {
-        node {
-          frontmatter {
-            slug
+    {
+      allMdx(filter: { frontmatter: { slug: { regex: "/articles/" } } }, sort: { order: DESC, fields: [frontmatter___date] }) {
+        edges {
+          node {
+            frontmatter {
+              slug
+            }
           }
         }
       }
     }
-  }
-  `).then(result => {
+  `).then((result) => {
     if (result.errors) {
       return Promise.reject(result.errors);
     }
@@ -34,7 +31,6 @@ exports.createPages = ({ actions, graphql }) => {
     });
   });
 };
-
 
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions;
