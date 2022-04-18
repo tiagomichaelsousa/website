@@ -17,7 +17,7 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-robots-txt',
     'gatsby-plugin-netlify',
-    '@paulkre/gatsby-transformer-svg',
+    'gatsby-transformer-inline-svg',
     'gatsby-transformer-yaml',
     'gatsby-plugin-sitemap',
     'gatsby-plugin-twitter',

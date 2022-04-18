@@ -47,7 +47,7 @@ const Technologies: React.FC = () => {
               <Link href={technology.url} title={technology.url} target="_blank" rel="noreferrer">
                 <Svg
                   css={{ fill: technology?.color, color: technology?.color }}
-                  dangerouslySetInnerHTML={{ __html: technology.logo.childSvg.content.data }}
+                  dangerouslySetInnerHTML={{ __html: technology.logo.svg.content }}
                   size="64"
                 />
               </Link>

@@ -13,10 +13,8 @@ const useAbout = (): About => {
               description
               title
               icon {
-                childSvg {
-                  content {
-                    data
-                  }
+                svg {
+                  content
                 }
               }
             }
@@ -24,10 +22,8 @@ const useAbout = (): About => {
               description
               title
               icon {
-                childSvg {
-                  content {
-                    data
-                  }
+                svg {
+                  content
                 }
               }
             }

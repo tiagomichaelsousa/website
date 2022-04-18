@@ -39,7 +39,7 @@ const About: React.FC = () => {
                 '@bp1': { maxWidth: 300 },
               }}
             >
-              <Svg color="primary" css={{ mb: '$8' }} dangerouslySetInnerHTML={{ __html: icon.childSvg.content.data }} size="64" />
+              <Svg color="primary" css={{ mb: '$8' }} dangerouslySetInnerHTML={{ __html: icon.svg.content }} size="64" />
 
               <Paragraph size="18" align="center" css={{ mb: '$4' }}>
                 {title}
@@ -73,7 +73,7 @@ const About: React.FC = () => {
                 '@bp1': { maxWidth: 300 },
               }}
             >
-              <Svg color="primary" css={{ mb: '$8' }} dangerouslySetInnerHTML={{ __html: icon.childSvg.content.data }} size="64" />
+              <Svg color="primary" css={{ mb: '$8' }} dangerouslySetInnerHTML={{ __html: icon.svg.content }} size="64" />
 
               <Paragraph size="18" align="center" css={{ mb: '$4' }}>
                 {title}
