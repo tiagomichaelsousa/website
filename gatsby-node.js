@@ -40,7 +40,7 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
 
     type Frontmatter {
-      authors: [AuthorsYaml] @link(by: "id")
+      authors: [AuthorsYaml] @link(by: "yamlId")
     }
   `;
   createTypes(typeDefs);
