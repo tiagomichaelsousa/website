@@ -39,7 +39,12 @@ const MdxComponents = {
   },
   code: (props: any) => <Code {...props} />,
   pre: ({ children }) => (
-    <Pre showLineNumbers={children.props.showLineNumbers} theme={children.props.theme}>
+    <Pre
+      showLineNumbers={children.props.showLineNumbers}
+      theme={children.props.theme}
+      dots={children.props.dots && /true/i.test(children.props.dots)}
+      filename={children.props.filename}
+    >
       {children}
     </Pre>
   ),
