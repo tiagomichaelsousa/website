@@ -27,12 +27,13 @@ import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import useSiteMetadata from '@hooks/useSiteMetadata';
 import { GatsbySeo } from 'gatsby-plugin-next-seo';
 import { Author } from '@types/Author';
+import moment from 'moment';
 
 const Article = ({ data: { mdx } }: PageProps<{ mdx: ArticlePageProps }>) => {
   const { siteUrl } = useSiteMetadata();
 
   const {
-    frontmatter: { title, date, dateFromNow, categories, authors, description, slug },
+    frontmatter: { title, date, categories, authors, description, slug },
     filepath,
     timeToRead,
     body,
@@ -80,7 +81,7 @@ const Article = ({ data: { mdx } }: PageProps<{ mdx: ArticlePageProps }>) => {
           </Svg>
           <Flex direction="column" align="center">
             <Paragraph>{date}</Paragraph>
-            <Paragraph color="gray">{dateFromNow}</Paragraph>
+            <Paragraph color="gray">{moment(date).fromNow()}</Paragraph>
             <Paragraph color="gray" size="12">
               {timeToRead} minutes read
             </Paragraph>
@@ -222,7 +223,6 @@ export const pageQuery = graphql`
       excerpt(pruneLength: 160)
       frontmatter {
         date(formatString: "dddd, DD MMMM YYYY")
-        dateFromNow: date(fromNow: true)
         title
         description
         categories
@@ -278,7 +278,6 @@ type ArticlePageProps = {
   frontmatter: {
     slug: string;
     date: string;
-    dateFromNow: string;
     title: string;
     description: string;
     categories: string[];

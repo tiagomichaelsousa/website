@@ -1,6 +1,8 @@
+import React, { PropsWithChildren } from 'react';
 import { styled } from '@theme/stitches.config';
+import { Flex, Box, Paragraph } from '@components';
 
-export const Pre = styled('pre', {
+const StyledPre = styled('pre', {
   $$background: '#6059f810',
   $$text: '$colors$white',
   $$syntax1: '#79A9FF',
@@ -182,3 +184,64 @@ export const Pre = styled('pre', {
     },
   },
 });
+
+const Dot = styled(Box, {
+  borderRadius: '$circle',
+  size: '$12',
+  backgroundColor: '$primary',
+  variants: {
+    color: {
+      red: {
+        backgroundColor: '#FF5F57',
+      },
+      yellow: {
+        backgroundColor: '#FEBC2E',
+      },
+      green: {
+        backgroundColor: '#27C840',
+      },
+    },
+  },
+});
+
+const Filename = ({ text }: { text: string }) => {
+  if (!text) {
+    return null;
+  }
+
+  return (
+    <Paragraph color="gray" size="12" align="center" css={{ width: '100%' }}>
+      {text}
+    </Paragraph>
+  );
+};
+
+const Dots = ({ enabled }: { enabled: boolean }) => {
+  if (!enabled) {
+    return null;
+  }
+
+  return (
+    <Flex css={{ bc: 'transparent', gap: '$8' }}>
+      <Dot color="red" />
+      <Dot color="yellow" />
+      <Dot color="green" />
+    </Flex>
+  );
+};
+
+type PreProps = { showLineNumbers: boolean; filename: string; dots: boolean; theme: string };
+export const Pre = ({ children, filename = '', dots = true, ...props }: PropsWithChildren<PreProps>) => {
+  return (
+    <StyledPre {...props}>
+      {(dots || filename) && (
+        <Flex align="center" css={{ px: '$24', mt: '$8' }}>
+          <Dots enabled={dots} />
+          <Filename text={filename} />
+        </Flex>
+      )}
+
+      {children}
+    </StyledPre>
+  );
+};

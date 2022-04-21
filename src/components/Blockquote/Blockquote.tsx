@@ -15,6 +15,9 @@ export const Blockquote = styled('blockquote', {
   py: '$16',
   px: '$24',
   my: '$24',
+  '& > p:nth-child(2)': {
+    m: 0,
+  },
   '@mobile': {
     flexDirection: 'column',
     alignItems: 'flex-start',
