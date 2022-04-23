@@ -77,7 +77,7 @@ public function articles(): HasMany
 Now it's time to update our factory and our seeds so that every time that we want to refresh our database we have a clean environment and data.
 In your `ArticleFactory.php` update the `definition()` method and add the following keys to the return statement:
 
-```php showLineNumbers
+```php showLineNumbers filename=database/factories/ArticleFactory.php
 public function definition()
 {
     return [
@@ -149,7 +149,7 @@ type Article {
 
 extend type Query {
   "List multiple articles."
-  articles("Filters by name. Accepts SQL LIKE wildcards `%` and `_`." name: String @where(operator: "like")): [Article!]!
+  articles("Filters by title. Accepts SQL LIKE wildcards `%` and `_`." title: String @where(operator: "like")): [Article!]!
     @paginate(defaultCount: 10)
 }
 ```
