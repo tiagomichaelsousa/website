@@ -44,6 +44,7 @@ const MdxComponents = {
       theme={children.props.theme}
       dots={children.props.dots && /true/i.test(children.props.dots)}
       filename={children.props.filename}
+      copy={children.props.copy && /true/i.test(children.props.copy)}
     >
       {children}
     </Pre>

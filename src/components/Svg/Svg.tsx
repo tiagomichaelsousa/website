@@ -51,6 +51,8 @@ export const Svg = styled('picture', {
         '@hover': {
           '&:hover': {
             cursor: 'pointer',
+            fill: '$contrast',
+            color: '$contrast',
           },
         },
       },

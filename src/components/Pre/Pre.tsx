@@ -1,6 +1,9 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useRef } from 'react';
 import { styled } from '@theme/stitches.config';
-import { Flex, Box, Paragraph } from '@components';
+import { Flex, Box, Paragraph, Svg, Tooltip, TooltipContent, TooltipTrigger, StyledArrow } from '@components';
+import CopySvg from '@images/svgs/copy.svg';
+import copyToClipboard from 'copy-to-clipboard';
+import { Toast, ToastAction, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from 'components/Toast/Toast';
 
 const StyledPre = styled('pre', {
   $$background: '#6059f810',
@@ -230,8 +233,14 @@ const Dots = ({ enabled }: { enabled: boolean }) => {
   );
 };
 
-type PreProps = { showLineNumbers: boolean; filename: string; dots: boolean; theme: string };
-export const Pre = ({ children, filename = '', dots = true, ...props }: PropsWithChildren<PreProps>) => {
+type PreProps = { showLineNumbers: boolean; filename: string; dots: boolean; copy: boolean; theme: string };
+export const Pre = ({ children, filename = '', dots = true, copy = true, ...props }: PropsWithChildren<PreProps>) => {
+  const textInput = useRef(null);
+
+  const onCopy = () => {
+    copyToClipboard(textInput.current.innerText.split('\n\n').join('\n'));
+  };
+
   return (
     <StyledPre {...props}>
       {(dots || filename) && (
@@ -241,7 +250,23 @@ export const Pre = ({ children, filename = '', dots = true, ...props }: PropsWit
         </Flex>
       )}
 
-      {children}
+      <Flex ref={textInput}>{children}</Flex>
+
+      {copy && (
+        <Flex justify="end">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Svg onClick={onCopy} pointer>
+                <CopySvg />
+              </Svg>
+            </TooltipTrigger>
+            <TooltipContent>
+              Copy
+              <StyledArrow />
+            </TooltipContent>
+          </Tooltip>
+        </Flex>
+      )}
     </StyledPre>
   );
 };
