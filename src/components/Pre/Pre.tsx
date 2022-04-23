@@ -3,7 +3,6 @@ import { styled } from '@theme/stitches.config';
 import { Flex, Box, Paragraph, Svg, Tooltip, TooltipContent, TooltipTrigger, StyledArrow } from '@components';
 import CopySvg from '@images/svgs/copy.svg';
 import copyToClipboard from 'copy-to-clipboard';
-import { Toast, ToastAction, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from 'components/Toast/Toast';
 
 const StyledPre = styled('pre', {
   $$background: '#6059f810',
