@@ -33,7 +33,7 @@ const Article = ({ data: { mdx } }: PageProps<{ mdx: ArticlePageProps }>) => {
   const { siteUrl } = useSiteMetadata();
 
   const {
-    frontmatter: { title, date, categories, authors, description, slug },
+    frontmatter: { title, date, dateFormated, categories, authors, description, slug },
     filepath,
     timeToRead,
     body,
@@ -80,7 +80,7 @@ const Article = ({ data: { mdx } }: PageProps<{ mdx: ArticlePageProps }>) => {
             <TagSvg />
           </Svg>
           <Flex direction="column" align="center">
-            <Paragraph>{date}</Paragraph>
+            <Paragraph>{dateFormated}</Paragraph>
             <Paragraph color="gray">{moment(date).fromNow()}</Paragraph>
             <Paragraph color="gray" size="12">
               {timeToRead} minutes read
@@ -222,7 +222,8 @@ export const pageQuery = graphql`
       filepath: slug
       excerpt(pruneLength: 160)
       frontmatter {
-        date(formatString: "dddd, DD MMMM YYYY")
+        dateFormated: date(formatString: "dddd, DD MMMM YYYY")
+        date
         title
         description
         categories
@@ -277,6 +278,7 @@ type ArticlePageProps = {
   filepath: string;
   frontmatter: {
     slug: string;
+    dateFormated: string;
     date: string;
     title: string;
     description: string;
