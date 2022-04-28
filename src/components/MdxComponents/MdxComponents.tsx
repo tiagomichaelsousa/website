@@ -5,12 +5,12 @@ import { MDXProvider as MDXJsProvider } from '@mdx-js/react';
 import { MDXRenderer as GatsbyMDXRenderer } from 'gatsby-plugin-mdx';
 
 const MdxComponents = {
-  h1: (props: any) => <Heading size="1" css={{ mt: '$16', mb: '$8' }} {...props} />,
-  h2: (props: any) => <Heading size="2" css={{ mt: '$16', mb: '$8' }} {...props} />,
-  h3: (props: any) => <Heading size="3" css={{ mt: '$16', mb: '$8' }} {...props} />,
-  h4: (props: any) => <Heading size="4" css={{ mt: '$16', mb: '$8' }} {...props} />,
-  h5: (props: any) => <Heading size="5" css={{ mt: '$16', mb: '$8' }} {...props} />,
-  h6: (props: any) => <Heading size="6" css={{ mt: '$16', mb: '$8' }} {...props} />,
+  h1: (props: any) => <Heading size="1" anchor id={`${props.children}`} css={{ mt: '$16', mb: '$8' }} {...props} />,
+  h2: (props: any) => <Heading size="2" anchor id={`${props.children}`} css={{ mt: '$16', mb: '$8' }} {...props} />,
+  h3: (props: any) => <Heading size="3" anchor id={`${props.children}`} css={{ mt: '$16', mb: '$8' }} {...props} />,
+  h4: (props: any) => <Heading size="4" anchor id={`${props.children}`} css={{ mt: '$16', mb: '$8' }} {...props} />,
+  h5: (props: any) => <Heading size="5" anchor id={`${props.children}`} css={{ mt: '$16', mb: '$8' }} {...props} />,
+  h6: (props: any) => <Heading size="6" anchor id={`${props.children}`} css={{ mt: '$16', mb: '$8' }} {...props} />,
   p: (props: any) => <Paragraph css={{ lh: '$40', mb: '$24' }} {...props} />,
   a: ({ href = '', ...props }) => {
     if (href.startsWith('http')) {

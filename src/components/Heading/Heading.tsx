@@ -1,7 +1,9 @@
 import React from 'react';
 import merge from 'lodash.merge';
-import { Text } from '@components';
+import { Text, Svg } from '@components';
 import { CSS, VariantProps } from '@theme/stitches.config';
+import LinkSvg from '@images/svgs/link.svg';
+import copyToClipboard from 'copy-to-clipboard';
 
 const DEFAULT_TAG = 'h1';
 
@@ -13,7 +15,7 @@ type HeadingProps = React.ComponentProps<typeof DEFAULT_TAG> & HeadingVariants &
 // eslint-disable-next-line react/display-name
 export const Heading = React.forwardRef<React.ElementRef<typeof DEFAULT_TAG>, HeadingProps>((props, forwardedRef) => {
   // '2' here is the default heading size variant
-  const { size = '1', ...textProps } = props;
+  const { size = '1', children, anchor = false, ...textProps } = props;
   // This is the mapping of Heading Variants to Text variants
   const textSize: Record<HeadingSizeVariants, TextSizeVariants['size']> = {
     1: { '@initial': '56', '@mobile': '32', '@bp2': '64' },
@@ -26,17 +28,24 @@ export const Heading = React.forwardRef<React.ElementRef<typeof DEFAULT_TAG>, He
 
   // This is the mapping of Heading Variants to Text css
   const textCss: Record<HeadingSizeVariants, CSS> = {
-    1: { fontWeight: 'bold', lineHeight: '$56', '@bp2': { lineHeight: '$64' } },
-    2: { fontWeight: 'bold', lineHeight: '$48', '@bp2': { lineHeight: '$56' } },
-    3: { fontWeight: 'bold', lineHeight: '$40', '@bp2': { lineHeight: '$48' } },
-    4: { fontWeight: 'bold', lineHeight: '$32', '@bp2': { lineHeight: '$40' } },
-    5: { fontWeight: 'bold', lineHeight: '$24', '@bp2': { lineHeight: '$32' } },
+    1: { fontWeight: 'bold', textDecoration: 'none', lineHeight: '$56', '@bp2': { lineHeight: '$64' } },
+    2: { fontWeight: 'bold', textDecoration: 'none', lineHeight: '$48', '@bp2': { lineHeight: '$56' } },
+    3: { fontWeight: 'bold', textDecoration: 'none', lineHeight: '$40', '@bp2': { lineHeight: '$48' } },
+    4: { fontWeight: 'bold', textDecoration: 'none', lineHeight: '$32', '@bp2': { lineHeight: '$40' } },
+    5: { fontWeight: 'bold', textDecoration: 'none', lineHeight: '$24', '@bp2': { lineHeight: '$32' } },
     6: { lineHeight: '$16', '@bp2': { lineHeight: '$24' } },
   };
+
+  const onCopy = () => {
+    copyToClipboard(`${window.location.href}#${children}`);
+  };
+
+  //console.log(props);
 
   return (
     <Text
       as={DEFAULT_TAG}
+      anchor={anchor}
       {...textProps}
       ref={forwardedRef}
       size={textSize[size]}
@@ -44,6 +53,14 @@ export const Heading = React.forwardRef<React.ElementRef<typeof DEFAULT_TAG>, He
         fontVariantNumeric: 'proportional-nums',
         ...merge(textCss[size], props.css),
       }}
-    />
+    >
+      {children}
+
+      {anchor && (
+        <Svg color="primary" css={{ display: 'inline-flex', ml: '$4 ' }} onClick={onCopy} pointer>
+          <LinkSvg />
+        </Svg>
+      )}
+    </Text>
   );
 });

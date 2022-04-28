@@ -93,6 +93,17 @@ export const Text = styled('span', {
         textShadow: '0 0 25px $colors$text',
       },
     },
+    anchor: {
+      true: {
+        '&::before': {
+          marginRight: '$4',
+          color: '$primary',
+          content: '"#"',
+          fonWeight: '400',
+          opacity: '.6',
+        },
+      },
+    },
     color: {
       primary: {
         color: '$primary',
