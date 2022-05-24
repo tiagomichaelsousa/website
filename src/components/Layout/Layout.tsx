@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { Box } from '@components';
 import Navbar from 'components/Navbar/Navbar';
 import Footer from 'components/Footer/Footer';
@@ -10,7 +10,7 @@ import { globalStyles } from '@theme/globalCss';
 
 const FONT_MONTSERRAT = 'https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap';
 
-const Layout: React.FC<LayoutProps> = ({ page, children, paper = 'default' }) => {
+export const Layout = ({ children, page, paper = 'default' }: PropsWithChildren<LayoutProps>) => {
   globalStyles();
   const allowed = useAllowedTokens();
 

@@ -42,6 +42,11 @@ const Article = ({ data: { mdx } }: PageProps<{ mdx: ArticlePageProps }>) => {
 
   const twitterHandles = useMemo(() => authors.map((author) => author.social.twitter.handle).join(', '), [authors]);
   const authorsNames = useMemo(() => authors.map((author) => author.name), [authors]);
+  const cloudinaryUrl = useMemo(() => {
+    const encodedTitle = encodeURIComponent(title.replace(/\,/g, '%2C').replace(/\//g, '%2F'));
+
+    return `https://res.cloudinary.com/tiagomichaelsousa/image/upload/co_white,l_text:Montserrat_20:Check%20out%20this%20article,x_-45,y_-60/c_fit,co_white,l_text:Montserrat_40_bold:${encodedTitle},w_650,x_120,y_10/v1/articles/seo-article_pw6fpl.png`;
+  }, [title]);
 
   return (
     <Layout page={title}>
@@ -62,7 +67,7 @@ const Article = ({ data: { mdx } }: PageProps<{ mdx: ArticlePageProps }>) => {
           },
           images: [
             {
-              url: `https://res.cloudinary.com/tiagomichaelsousa/image/upload/co_white,l_text:Montserrat_20:Check%20out%20this%20article,x_-45,y_-60/c_fit,co_white,l_text:Montserrat_40_bold:${title},w_650,x_120,y_10/v1/articles/seo-article_pw6fpl.png`,
+              url: cloudinaryUrl,
               alt: title,
             },
           ],
