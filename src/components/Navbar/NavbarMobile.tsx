@@ -52,7 +52,7 @@ const NavbarMobile: React.FC = () => {
             backgroundColor: '$paper',
             width: '100%',
             height: '100vh',
-            position: 'absolute',
+            position: 'fixed',
             top: 0,
             left: 0,
             zIndex: '$max',
@@ -95,7 +95,7 @@ const NavbarMobile: React.FC = () => {
             </GatsbyLink>
           </Flex>
 
-          <Flex gap="24" justify="center">
+          <Flex gap="24" justify="center" css={{ mb: '$64' }}>
             <Link
               href={personalInfo.social.github.url}
               title={personalInfo.social.github.url}
