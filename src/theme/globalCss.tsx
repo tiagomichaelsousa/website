@@ -21,4 +21,15 @@ export const globalStyles = globalCss({
   '*': {
     scrollBehavior: 'smooth !important',
   },
+  "::-webkit-scrollbar": {
+    width: "$8",
+    height: "$8"
+  },
+  "::-webkit-scrollbar-track": {
+    backgroundColor: "$paper",
+  },
+  "::-webkit-scrollbar-thumb": {
+    background: "$primary",
+    borderRadius: "$8"
+  }
 });
