@@ -415,7 +415,7 @@ DISCORD_REDIRECT_URI=
 
 Regarding `blah-ui` we just need to add a new button in our login page (as we already did previously for GitHub) for our new provider
 
-```jsx showLineNumbers line=8-12 filename=src/pages/login.js
+```jsx showLineNumbers line=6-8 filename=src/pages/login.js
 <div className="flex items-center justify-end mt-4 gap-3">
   <Link href={`${process.env.NEXT_PUBLIC_BACKEND_URL}/login/github`}>
     <a className="underline text-sm text-gray-600 hover:text-gray-900">Github</a>
