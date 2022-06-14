@@ -522,7 +522,7 @@ Of course, more tests will be written for this application but you can dig into 
 ```php
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Sanctum\Sanctum;;
+use Laravel\Sanctum\Sanctum;
 
 it('allows a user to login successfully', function () {
     $user =  User::factory()->create([
