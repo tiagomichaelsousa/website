@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { Box } from '@components';
 import Navbar from 'components/Navbar/Navbar';
 import Footer from 'components/Footer/Footer';
@@ -13,6 +13,19 @@ const FONT_MONTSERRAT = 'https://fonts.googleapis.com/css?family=Montserrat:400,
 export const Layout = ({ children, page, paper = 'default' }: PropsWithChildren<LayoutProps>) => {
   globalStyles();
   const allowed = useAllowedTokens();
+  const [scroll, setScroll] = useState(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement
+      setScroll((scrollTop / (scrollHeight - clientHeight)) * 100);
+    };
+
+    document.addEventListener('scroll', onScroll, { passive: true });
+
+    // clean up the event handler when the component unmounts
+    return () => document.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
     <Box paper={paper}>
@@ -28,6 +41,16 @@ export const Layout = ({ children, page, paper = 'default' }: PropsWithChildren<
         <link href={FONT_MONTSERRAT} rel="stylesheet" media="all" />
       </Helmet>
 
+      <Box
+        css={{
+          position: 'fixed',
+          top: '0',
+          width: `${scroll}%`,
+          height: '$4',
+          linearGradient: 'to right, #4389A2, #5C258D',
+          zIndex: '$max',
+        }}
+      />
       {MAINTENANCE_MODE && !allowed ? (
         <Maintenance />
       ) : (

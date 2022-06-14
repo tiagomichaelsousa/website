@@ -174,6 +174,10 @@ export const { styled, css, theme, createTheme, getCssText, globalCss, keyframes
       backgroundColor: value,
     }),
 
+    linearGradient: (value: Stitches.PropertyValue<'background'>) => ({
+      background: `linear-gradient(${value})`,
+    }),
+
     br: (value: Stitches.PropertyValue<'borderRadius'>) => ({
       borderRadius: value,
     }),
