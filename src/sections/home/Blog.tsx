@@ -2,6 +2,7 @@ import useLatestArticles from '@hooks/useLatestArticles';
 import { Box, Card, Container, Flex, GatsbyImage, GatsbyLink, Heading, Paragraph, Badge } from '@components';
 import React from 'react';
 import { getImage, IGatsbyImageData, StaticImage } from 'gatsby-plugin-image';
+import { ArrowRightIcon } from '@radix-ui/react-icons';
 
 const Blog: React.FC = () => {
   const articles = useLatestArticles();
@@ -108,6 +109,13 @@ const Blog: React.FC = () => {
           ))}
         </Box>
       </Container>
+
+      <Flex justify="center" align="center" css={{ mb: '$64' }}>
+        <GatsbyLink to="/articles" title="Blog" variant="button" size="2">
+          Read More
+          <ArrowRightIcon />
+        </GatsbyLink>
+      </Flex>
     </Container>
   );
 };

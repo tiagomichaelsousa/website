@@ -28,6 +28,13 @@ const styles = {
         },
       },
     },
+    disabled: {
+      true: {
+        backgroundColor: '$primary',
+        pointerEvents: 'none',
+        opacity: 0.3,
+      },
+    },
     size: {
       '1': {
         py: '$8',

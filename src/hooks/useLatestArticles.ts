@@ -6,7 +6,7 @@ const useLatestArticles = (): Article[] => {
     allMdx: { edges },
   } = useStaticQuery(graphql`
     query LatestArticles {
-      allMdx(filter: { slug: { regex: "/articles/" } }, sort: { order: DESC, fields: [frontmatter___date] }) {
+      allMdx(filter: { slug: { regex: "/articles/" } }, sort: { order: DESC, fields: [frontmatter___date] }, limit: 4) {
         edges {
           node {
             frontmatter {

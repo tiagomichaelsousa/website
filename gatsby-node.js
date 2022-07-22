@@ -1,9 +1,11 @@
-exports.createPages = ({ actions, graphql }) => {
+const { paginate } = require('gatsby-awesome-pagination');
+
+exports.createPages = async ({ actions, graphql, reporter }) => {
   const { createPage } = actions;
 
   const articlesTemplate = require.resolve('./src/templates/article.tsx');
 
-  return graphql(`
+  const result = await graphql(`
     {
       allMdx(filter: { frontmatter: { slug: { regex: "/articles/" } } }, sort: { order: DESC, fields: [frontmatter___date] }) {
         edges {
@@ -15,21 +17,32 @@ exports.createPages = ({ actions, graphql }) => {
         }
       }
     }
-  `).then((result) => {
-    if (result.errors) {
-      return Promise.reject(result.errors);
-    }
+  `)
+
+  if (result.errors) {
+    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    return
+  }
+
+  const articlesListTemplate = require.resolve('./src/templates/articles.tsx');
+
+  paginate({
+    createPage,
+    items: result.data.allMdx.edges,
+    itemsPerPage: 3,
+    pathPrefix: '/articles',
+    component: articlesListTemplate
+  });
 
     return result.data.allMdx.edges.forEach(({ node }) => {
-      createPage({
+        createPage({
         path: node.frontmatter.slug,
         component: articlesTemplate,
         context: {
-          slug: node.frontmatter.slug,
+            slug: node.frontmatter.slug,
         },
-      });
+        });
     });
-  });
 };
 
 exports.createSchemaCustomization = ({ actions }) => {
