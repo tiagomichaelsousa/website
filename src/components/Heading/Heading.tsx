@@ -40,8 +40,6 @@ export const Heading = React.forwardRef<React.ElementRef<typeof DEFAULT_TAG>, He
     copyToClipboard(`${window.location.href}#${children}`);
   };
 
-  //console.log(props);
-
   return (
     <Text
       as={DEFAULT_TAG}

@@ -9,14 +9,11 @@ import TwitterSvg from '@images/svgs/twitter.svg';
 import LinkedinSvg from '@images/svgs/linkedin.svg';
 import MoonSvg from '@images/svgs/moon.svg';
 import SunSvg from '@images/svgs/sun.svg';
-import useTheme from '@hooks/useTheme';
-
-export const LIGHT_THEME_KEY = 'light-theme';
-export const THEME_KEY = 'theme';
+import useTheme, { LIGHT_THEME_KEY } from '@hooks/useTheme';
 
 const Navbar: React.FC = () => {
   const personalInfo = usePersonalInfo();
-  const [handleThemeChange, theme] = useTheme();
+  const { handleThemeChange, theme } = useTheme();
 
   return (
     <Container css={{ pt: '$32', pb: 0 }} as="header">

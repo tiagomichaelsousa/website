@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { graphql, PageProps } from 'gatsby';
 import Layout from 'components/Layout/Layout';
 import {
@@ -26,11 +26,15 @@ import TagSvg from '@images/svgs/tag.svg';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import useSiteMetadata from '@hooks/useSiteMetadata';
 import { GatsbySeo } from 'gatsby-plugin-next-seo';
-import { Author } from '@types/Author';
+import { Author } from '@type/Author';
 import moment from 'moment';
+import Giscus from '@giscus/react';
+import useTheme from '@hooks/useTheme';
+import { GISCUS_CATEGORY_ID, GISCUS_REPOSITORY, GISCUS_REPOSITORY_ID } from '@utils/env';
 
 const Article = ({ data: { mdx } }: PageProps<{ mdx: ArticlePageProps }>) => {
   const { siteUrl } = useSiteMetadata();
+  const { theme } = useTheme()
 
   const {
     frontmatter: { title, date, dateFormated, categories, authors, description, slug },
@@ -129,6 +133,21 @@ const Article = ({ data: { mdx } }: PageProps<{ mdx: ArticlePageProps }>) => {
         <MDXProvider components={MdxComponents}>
           <MDXRenderer frontmatter={mdx.frontmatter}>{body}</MDXRenderer>
         </MDXProvider>
+
+        <Giscus
+          id="comments"
+          repo={GISCUS_REPOSITORY}
+          repoId={GISCUS_REPOSITORY_ID}
+          category="Comments"
+          categoryId={GISCUS_CATEGORY_ID}
+          mapping="pathname"
+          reactionsEnabled="1"
+          emitMetadata="0"
+          inputPosition="top"
+          theme={theme}
+          lang="en"
+          loading="lazy"
+        />
 
         <Flex justify="between" css={{ mt: '$64', mb: '$32', '@mobile': { flexDirection: 'column', gap: '$32' } }}>
           <Link

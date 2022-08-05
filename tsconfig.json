@@ -22,7 +22,7 @@
       "@theme/*": ["src/theme/*"],
       "@images/*": ["src/images/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@types/*": ["src/types/*"]
+      "@type/*": ["src/types/*"]
     }
   },
   "include": ["./src/**/*", "./custom.d.ts", "./.eslintrc.js", "./gatsby-config.js", "./gatsby-ssr.js", "./gatsby-node.js"]

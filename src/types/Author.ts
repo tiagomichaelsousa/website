@@ -1,4 +1,4 @@
-import { SocialMedia } from '@types/PersonalInfo';
+import { SocialMedia } from '@type/PersonalInfo';
 import { ImageDataLike } from 'gatsby-plugin-image';
 
 export type Author = {

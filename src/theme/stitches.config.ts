@@ -232,7 +232,7 @@ export const { styled, css, theme, createTheme, getCssText, globalCss, keyframes
   },
 });
 
-export const darkTheme = createTheme('dark-theme', {
+export const darkTheme = createTheme('dark', {
   colors: {
     text: '#ffffff',
     contrast: '#ffffff',

@@ -1,4 +1,4 @@
-import { About } from '@types/About';
+import { About } from '@type/About';
 import { graphql, useStaticQuery } from 'gatsby';
 
 const useAbout = (): About => {
