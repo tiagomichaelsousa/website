@@ -1,4 +1,4 @@
-import { Technology } from '@types/Technologies';
+import { Technology } from '@type/Technologies';
 import { graphql, useStaticQuery } from 'gatsby';
 
 const useTechnologies = (): Technology[] => {

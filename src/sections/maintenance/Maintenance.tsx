@@ -12,7 +12,7 @@ import useTheme, { LIGHT_THEME_KEY } from '@hooks/useTheme';
 
 const Maintenance: React.FC = () => {
   const personalInfo = usePersonalInfo();
-  const [handleThemeChange, theme] = useTheme();
+  const { handleThemeChange, theme } = useTheme();
 
   return (
     <Container size="3" css={{ py: 0 }}>

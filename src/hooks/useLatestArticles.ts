@@ -1,4 +1,4 @@
-import { Article } from '@types/Article';
+import { Article } from '@type/Article';
 import { graphql, useStaticQuery } from 'gatsby';
 
 const useLatestArticles = (): Article[] => {

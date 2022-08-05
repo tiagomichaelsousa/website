@@ -138,7 +138,7 @@ module.exports = {
           '@theme': './src/theme/',
           '@images': './src/images/',
           '@hooks': './src/hooks/',
-          '@types': './src/types/',
+          '@type': './src/types/',
         },
         extensions: ['tsx', 'ts'],
       },
