@@ -7,6 +7,7 @@ import useAllowedTokens from '@hooks/useAllowedTokens';
 import { MAINTENANCE_MODE } from '@utils/env';
 import Maintenance from '@sections/maintenance/Maintenance';
 import { globalStyles } from '@theme/globalCss';
+import ScrollTop from 'components/ScrollTop/ScrollTop';
 
 const FONT_MONTSERRAT = 'https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap';
 
@@ -58,6 +59,7 @@ export const Layout = ({ children, page, paper = 'default' }: PropsWithChildren<
           <Navbar />
           {children}
           <Footer />
+          <ScrollTop />
         </>
       )}
     </Box>

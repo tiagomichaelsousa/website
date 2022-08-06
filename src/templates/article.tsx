@@ -30,7 +30,6 @@ import { Author } from '@type/Author';
 import moment from 'moment';
 import Giscus from '@giscus/react';
 import useTheme from '@hooks/useTheme';
-import { GISCUS_CATEGORY_ID, GISCUS_REPOSITORY, GISCUS_REPOSITORY_ID } from '@utils/env';
 
 const Article = ({ data: { mdx } }: PageProps<{ mdx: ArticlePageProps }>) => {
   const { siteUrl } = useSiteMetadata();
@@ -136,10 +135,10 @@ const Article = ({ data: { mdx } }: PageProps<{ mdx: ArticlePageProps }>) => {
 
         <Giscus
           id="comments"
-          repo={GISCUS_REPOSITORY}
-          repoId={GISCUS_REPOSITORY_ID}
+          repo="tiagomichaelsousa/website"
+          repoId="R_kgDOGohWBw"
           category="Comments"
-          categoryId={GISCUS_CATEGORY_ID}
+          categoryId="DIC_kwDOGohWB84CQmG5"
           mapping="pathname"
           reactionsEnabled="1"
           emitMetadata="0"

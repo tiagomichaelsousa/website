@@ -1,9 +1,8 @@
 import React, { PropsWithChildren, useRef } from 'react';
 import { styled } from '@theme/stitches.config';
-import { Flex, Box, Paragraph, Svg, Tooltip, TooltipContent, TooltipTrigger, StyledArrow } from '@components';
+import { Flex, Box, Paragraph, Svg, Tooltip, TooltipContent, TooltipTrigger, StyledArrow, TooltipProvider } from '@components';
 import CopySvg from '@images/svgs/copy.svg';
 import copyToClipboard from 'copy-to-clipboard';
-import { TooltipProvider } from 'components/Tooltip/Tooltip';
 
 const StyledPre = styled('pre', {
   $$background: '#6059f810',

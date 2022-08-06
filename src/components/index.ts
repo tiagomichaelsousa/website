@@ -10,7 +10,7 @@ import { Paragraph } from './Paragraph/Paragraph';
 import { Text } from './Text/Text';
 import { GatsbyImage, Img, StaticImage } from './Image/Image';
 import { Carousel } from './Carousel/Carousel';
-import { StyledArrow, Tooltip, TooltipContent, TooltipTrigger } from './Tooltip/Tooltip';
+import { StyledArrow, Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from './Tooltip/Tooltip';
 import { Badge } from './Badge/Badge';
 import Layout from './Layout/Layout';
 import MdxComponents, { MDXProvider, MDXRenderer } from './MdxComponents/MdxComponents';
@@ -36,6 +36,7 @@ export {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
+  TooltipProvider,
   StyledArrow,
   Card,
   GatsbyImage,
