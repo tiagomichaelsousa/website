@@ -3,6 +3,7 @@ import { styled } from '@theme/stitches.config';
 import { Flex, Box, Paragraph, Svg, Tooltip, TooltipContent, TooltipTrigger, StyledArrow } from '@components';
 import CopySvg from '@images/svgs/copy.svg';
 import copyToClipboard from 'copy-to-clipboard';
+import { TooltipProvider } from 'components/Tooltip/Tooltip';
 
 const StyledPre = styled('pre', {
   $$background: '#6059f810',
@@ -253,17 +254,19 @@ export const Pre = ({ children, filename = '', dots = true, copy = true, ...prop
 
       {copy && (
         <Flex justify="end">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Svg onClick={onCopy} pointer>
-                <CopySvg />
-              </Svg>
-            </TooltipTrigger>
-            <TooltipContent>
-              Copy
-              <StyledArrow />
-            </TooltipContent>
-          </Tooltip>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Svg onClick={onCopy} pointer>
+                  <CopySvg />
+                </Svg>
+              </TooltipTrigger>
+              <TooltipContent>
+                Copy
+                <StyledArrow />
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </Flex>
       )}
     </StyledPre>
