@@ -115,9 +115,11 @@ const Footer: React.FC = () => {
         </Paragraph>
 
         <StaticImage
-          src="../../images/memojis/memoji02.png"
-          alt="memoji02"
-          title="memoji02"
+          src="../../../static/images/memojis/memoji12.png"
+          width={90}
+          height={90}
+          alt="memoji12"
+          title="memoji12"
           placeholder="blurred"
           formats={['auto', 'webp', 'avif']}
         />

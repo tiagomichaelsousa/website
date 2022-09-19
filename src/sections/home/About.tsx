@@ -18,9 +18,9 @@ const About: React.FC = () => {
 
         <Flex align="center" direction="column" css={{ px: '$32', '@bp1': { display: 'none' } }}>
           <StaticImage
-            src="../../images/memojis/memoji03.png"
-            alt="memoji03"
-            title="memoji03"
+            src="../../../static/images/memojis/memoji22.png"
+            alt="memoji22"
+            title="memoji22"
             placeholder="blurred"
             formats={['auto', 'webp', 'avif']}
           />
@@ -54,7 +54,7 @@ const About: React.FC = () => {
 
         <Flex align="center" direction="column" css={{ px: '$32', '@mobile': { display: 'none' } }}>
           <StaticImage
-            src="../../images/memojis/memoji03.png"
+            src="../../../static/images/memojis/memoji22.png"
             alt="memoji03"
             title="memoji03"
             placeholder="blurred"

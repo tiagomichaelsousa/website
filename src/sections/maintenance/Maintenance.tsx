@@ -35,9 +35,9 @@ const Maintenance: React.FC = () => {
           }}
         >
           <StaticImage
-            src="../../images/memojis/memoji03.png"
-            alt="memoji03"
-            title="memoji03"
+            src="../../../static/images/memojis/memoji22.png"
+            alt="memoji22"
+            title="memoji22"
             placeholder="blurred"
             width={350}
             height={350}
