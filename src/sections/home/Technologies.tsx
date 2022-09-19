@@ -18,9 +18,9 @@ const Technologies: React.FC = () => {
       >
         <Box css={{ minWidth: 215 }}>
           <StaticImage
-            src="../../images/memojis/memoji04.png"
-            alt="memoji04"
-            title="memoji04"
+            src="../../../static/images/memojis/memoji56.png"
+            alt="memoji56"
+            title="memoji56"
             placeholder="blurred"
             width={215}
             formats={['auto', 'webp', 'avif']}

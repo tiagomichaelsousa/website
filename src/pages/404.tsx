@@ -25,7 +25,7 @@ const NotFoundPage: React.FC = () => {
             }}
           >
             <StaticImage
-              src="../images/memojis/memoji05.png"
+              src="../../static/images/memojis/memoji05.png"
               alt="memoji05"
               title="memoji05"
               placeholder="blurred"

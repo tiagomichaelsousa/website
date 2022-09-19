@@ -20,9 +20,9 @@ const Navbar: React.FC = () => {
       <Flex justify="between" align="center" css={{ '@mobile': { display: 'none' } }}>
         <GatsbyLink to="/" title="/">
           <StaticImage
-            src="../../images/memojis/memoji01.png"
-            alt="memoji01"
-            title="memoji01"
+            src="../../../static/images/memojis/memoji24.png"
+            alt="memoji24"
+            title="memoji24"
             width={85}
             height={85}
             placeholder="blurred"
