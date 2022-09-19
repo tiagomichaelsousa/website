@@ -5,6 +5,7 @@ import Banner from '@sections/home/Banner';
 import Blog from '@sections/home/Blog';
 import About from '@sections/home/About';
 import Job from '@sections/home/Job';
+import Sponsor from '@sections/home/Sponsor';
 
 const IndexPage: React.FC = () => {
   return (
@@ -14,6 +15,7 @@ const IndexPage: React.FC = () => {
       <Job />
       <Technologies />
       <Blog />
+      <Sponsor />
     </Layout>
   );
 };

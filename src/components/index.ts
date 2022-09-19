@@ -21,6 +21,7 @@ import { ListItem } from './ListItem/ListItem';
 import { Blockquote } from './Blockquote/Blockquote';
 import { Svg } from './Svg/Svg';
 import NavbarMobile from './Navbar/NavbarMobile';
+import SponsorCard from './SponsorCard/SponsorCard';
 
 export {
   Button,
@@ -55,4 +56,5 @@ export {
   Blockquote,
   Svg,
   NavbarMobile,
+  SponsorCard
 };
