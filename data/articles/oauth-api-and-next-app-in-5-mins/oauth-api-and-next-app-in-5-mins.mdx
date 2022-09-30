@@ -16,10 +16,10 @@ categories:
 
 # Introduction
 
-Nowadays, almost every single application allows OAuth integrations so users don't have to go through the boring and long registrations flows.
-Besides simplifiying (by a lot 🥵) the registration flow, it also provides the developer that is implementing the authentication system with a lot of information, out of the box, regarding the user.
+Nowadays, almost every single application allows OAuth integrations so users don't have to go through the boring and long registration flows.
+Besides simplifying (by a lot 🥵) the registration flow, it also provides the developer that is implementing the authentication system with a lot of information, out of the box, regarding the user.
 
-With this article we will learn how can we setup an authentication system with [Laravel](https://laravel.com/) and [NextJs](https://nextjs.org/) in minutes whilst adding the possibility to
+With this article, we will learn how can we setup an authentication system with [Laravel](https://laravel.com/) and [NextJs](https://nextjs.org/) in minutes whilst adding the possibility to
 login with [GitHub](https://github.com/) and [Discord](https://discord.com/)!
 
 I called this application `Blah` and decided that this application will be the starting point for exploring more things within the Laravel ecosystem so that
@@ -31,13 +31,13 @@ If you have been following what I publish, you probably already saw the required
 Sail is my go-to regarding developing with Laravel because it is really easy to setup and, as developer, I don't need to have the dependencies installed locally.
 If you want a full overview regarding Sail you should [check this out](https://tiagomichaelsousa.dev/articles/laragraph-laravel-and-graphql-part-1/#Setting%20up%20Sail) 🚀
 
-For this use case we will install Laravel and Sail directly with a magic `curl` request and name the application `blah-be` (which stands for blah backend, of course) and require `mysql` as a dependecy.
+For this use case, we will install Laravel and Sail directly with a magic `curl` request and name the application `blah-be` (which stands for blah backend, of course) and require `mysql` as a dependency.
 
 ```bash
 curl -s "https://laravel.build/blah-be?with=mysql" | bash
 ```
 
-> I suggest to create a `blah` directory, `cd` into it and run the command so in the future the `blah-ui` stands at the same level
+> I suggest creating a `blah` directory, `cd` into it and run the command so in the future the `blah-ui` stands at the same level
 
 After creating our backend and having it ready with Sail we just need to run the command below in order to bring up our development environment.
 
@@ -289,11 +289,13 @@ public function store(OAuthProviderEnum $provider)
 
     Auth::login($user);
 
-    return redirect(env('FRONTEND_URL'));
+    return redirect(config('app.frontend_url'));
 }
 ```
 
-From the code prespective, there are only two steps missing in the backend which are:
+> Do not use `redirect(env('FRONTEND_URL'))` the `env` function should only be used inside your config files. If you want to know more please have a look [here](https://github.com/tiagomichaelsousa/website/issues/34)
+
+From the code perspective, there are only two steps missing in the backend which are:
 
 - update our service providers and add github
 - update our environment variables
@@ -378,11 +380,11 @@ For that, go to the [developer page](https://discord.com/developers/applications
 After the application is created, reset your `client_secret` and save it alongside the `client_id`. Also, the redirects must be
 defined to our callback route with correct path, which theorically should be `http://localhost/login/discord/callback`.
 
-The imagem below shows the configuration as you need and as it should be.
+The image below shows the configuration as you need and as it should be.
 
 ![Discord App Creation](./discord-app.png)
 
-After this step we need to do some changes in both `blah-be` and `blah-ui` applications.
+After this step, we need to do some changes in both `blah-be` and `blah-ui` applications.
 Starting with `blah-be`, we need to add Discord to our `OAuthProviderEnum` in order to be validated and approved as a valid provider.
 
 ```diff filename=app/Enums/OAuthProviderEnum.php
@@ -413,7 +415,7 @@ DISCORD_CLIENT_SECRET=
 DISCORD_REDIRECT_URI=
 ```
 
-Regarding `blah-ui` we just need to add a new button in our login page (as we already did previously for GitHub) for our new provider
+Regarding `blah-ui` we just need to add a new button on our login page (as we already did previously for GitHub) for our new provider
 
 ```jsx showLineNumbers line=6-8 filename=src/pages/login.js
 <div className="flex items-center justify-end mt-4 gap-3">
