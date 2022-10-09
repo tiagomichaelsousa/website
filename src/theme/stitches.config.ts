@@ -13,6 +13,7 @@ export const { styled, css, theme, createTheme, getCssText, globalCss, keyframes
       secondary: '#7B75F9',
       gray: '#757575',
       darkGray: '#454545',
+      green: '#84B301',
       white: '#ffffff',
       black: '#000000',
       text: '#000000',
@@ -238,6 +239,7 @@ export const darkTheme = createTheme('dark', {
     contrast: '#ffffff',
     paper: '#040620',
     gray: '#B8B8B8',
+    green: '#b8eb80',
 
     transparentPanel: 'hsl(0 100% 100% / 97%)',
     shadowLight: 'hsl(206 22% 7% / 35%)',

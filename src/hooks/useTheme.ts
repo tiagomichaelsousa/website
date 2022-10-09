@@ -1,11 +1,13 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { darkTheme } from '@theme/stitches.config';
+import { useRecoilState } from 'recoil';
+import State from '../state';
 
 export const LIGHT_THEME_KEY = 'light';
 export const THEME_KEY = 'theme';
 
 const useTheme = () => {
-  const [theme, setTheme] = useState(LIGHT_THEME_KEY);
+  const [theme, setTheme] = useRecoilState(State.theme)
 
   useEffect(() => {
     const currentTheme = localStorage.getItem(THEME_KEY);
@@ -16,7 +18,7 @@ const useTheme = () => {
     }
 
     setTheme(currentTheme);
-  }, []);
+  }, [setTheme]);
 
   useEffect(() => {
     document.body.classList.remove(LIGHT_THEME_KEY, darkTheme);
@@ -27,7 +29,7 @@ const useTheme = () => {
     const currentTheme = theme === LIGHT_THEME_KEY ? darkTheme : LIGHT_THEME_KEY;
     localStorage.setItem(THEME_KEY, currentTheme);
     setTheme(currentTheme);
-  }, [theme]);
+  }, [setTheme, theme]);
 
   return {
     handleThemeChange,

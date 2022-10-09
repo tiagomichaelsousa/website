@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { graphql, PageProps } from 'gatsby';
 import Layout from 'components/Layout/Layout';
 import {
@@ -33,7 +33,7 @@ import useTheme from '@hooks/useTheme';
 
 const Article = ({ data: { mdx } }: PageProps<{ mdx: ArticlePageProps }>) => {
   const { siteUrl } = useSiteMetadata();
-  const { theme } = useTheme()
+  const { theme } = useTheme();
 
   const {
     frontmatter: { title, date, dateFormated, categories, authors, description, slug },

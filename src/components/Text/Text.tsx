@@ -6,7 +6,6 @@ export const Text = styled('span', {
   margin: '0',
   fontWeight: 400,
   fontVariantNumeric: 'tabular-nums',
-  display: 'block',
 
   variants: {
     size: {
@@ -126,10 +125,22 @@ export const Text = styled('span', {
       darkGray: {
         color: '$darkGray',
       },
+      green: {
+        color: '$green',
+      }
     },
+    display: {
+      inline: {
+        display: 'inline-block',
+      },
+      block: {
+        display: 'block',
+      }
+    }
   },
   defaultVariants: {
     size: '8',
     color: 'contrast',
+    display: 'block'
   },
 });
