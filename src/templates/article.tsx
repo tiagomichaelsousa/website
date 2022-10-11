@@ -145,7 +145,6 @@ const Article = ({ data: { mdx } }: PageProps<{ mdx: ArticlePageProps }>) => {
           inputPosition="top"
           theme={theme}
           lang="en"
-          loading="lazy"
         />
 
         <Flex justify="between" css={{ mt: '$64', mb: '$32', '@mobile': { flexDirection: 'column', gap: '$32' } }}>
