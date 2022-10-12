@@ -37,7 +37,7 @@ export const Heading = React.forwardRef<React.ElementRef<typeof DEFAULT_TAG>, He
   };
 
   const onCopy = () => {
-    copyToClipboard(`${window.location.href}#${children}`);
+    copyToClipboard(`${window.location.origin}${window.location.pathname}#${children}`);
   };
 
   return (

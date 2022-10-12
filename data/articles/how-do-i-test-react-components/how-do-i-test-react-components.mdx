@@ -1,0 +1,651 @@
+---
+title: How do I test React components?
+date: 2022-10-12
+image: thumbnail.jpeg
+slug: articles/how-do-i-test-react-components
+authors:
+  - tsousa
+description: |
+  There is no such thing as "a perfect way to do this or that" but we, software engineers, always
+  try to find what suits us the best while always thinking of a way to improve it continuously.
+  If you are curious to see how I like to handle component testing in react feel free to stick around! 🚀
+  
+categories:
+  - Testing
+  - React
+  - Factories
+  - Jest
+  - RTL
+---
+
+import { Box, Paragraph } from '@components';
+
+
+# Introduction
+Following the well-known sentence **there is no such thing as a dumb question** I also like to say that 
+there is no such thing as **a perfect way to do this or that** but I like to have kind of a "guide" of things
+that I like to do when tackling specific topics and testing react components is one of them.
+
+With this article, I'm definitely not saying "stop doing the way that you are doing because it's wrong". 
+It's more a point of view (POV), a potential solution to a problem and a way to share how I like to do things,
+which you can agree with or not.
+
+# How many times do you copy-paste? 🤔
+
+When bootstrapping projects is not that common but when you already have a solid boilerplate and starting point for 
+your product development, how often do you copy-paste code? As with every decision in life, this approach of copy-pasting
+brings **pros** and **cons** which I like to see as **tradeoffs**.
+
+One of the cons of this habit that becomes more and more frequent is that you are "skipping" the continuous improvements 
+in your code base, as you feel that "if it worked like that previously I just need to copy it" 👀 
+
+But now you ask:
+
+**Tiago, how can we relate this what you just said to testing?** 
+
+and I will answer you:
+
+**Testing is part of the development process and if you are doing this while developing features you will do it for your tests as well!**
+
+Which may lead you to future problems.
+
+As Linus Torvalds uses to say **Talk is cheap. Show me the code**, so let's get into examples and actual code.
+For this article, we will use a simple `<Profile />` component as a base so that I can share with you some of 
+the approaches that I always keep in mind when talking about tests.
+
+```tsx filename=src/components/Profile/Profile.tsx
+import React from 'react';
+import { User } from '@type/User';
+import { Container, Paragraph } from '@components';
+
+const Profile = ({ 
+  user, 
+  disabled = true,
+}: ProfileProps) => {
+  return (
+    <Container as="section">
+      <Paragraph>{user.name}</Paragraph>
+      <Paragraph>{user.email}</Paragraph>
+      <Button disabled={disabled}>Edit</Button>
+    </Container>
+  );
+};
+
+type ProfileProps = {
+  user: User;
+  disabled?: boolean;
+};
+
+export default Profile;
+```
+
+This component doesn't have any complexity, it receives a `user` and a `disabled` prop. 
+The `user` prop will be used to render the `name` and `email` and the `disabled` prop will
+control if the button to edit the user should be enabled or not.
+
+With that said, let's write a couple of tests for our component:
+- it should render successfully
+- it should render with the button disabled
+- should render with the button enabled
+
+```tsx filename=src/components/Profile/Profile.spec.tsx
+import { MOCKED_USER as user } from '@/testUtils/mocks';
+import { render } from '@testing-library/react';
+
+describe('<Profile /> component', () => {
+  it('should render successfully', () => {
+    expect.assertions(3);
+
+    const { getByText, getByRole } = render(
+      <Profile
+        user={user}
+        disabled
+      />,
+    );
+
+    expect(getByText(user.name)).toBeInTheDocument();
+    expect(getByText(user.email)).toBeInTheDocument();
+    expect(getByRole('button')).toBeInTheDocument();
+  });
+
+  it('should render with the button disabled', () => {
+    expect.assertions(1);
+
+    const { getByText, getByRole } = render(
+      <Profile
+        user={user}
+        disabled
+      />,
+    );
+
+    expect(getByRole('button')).toBeDisabled();
+  });
+
+  it('should render with the button enabled', () => {
+    expect.assertions(1);
+
+    const { getByText, getByRole } = render(
+      <Profile
+        user={user}
+        disabled={false}
+      />,
+    );
+
+    expect(getByRole('button')).not.toBeDisabled();
+  });
+});
+```
+Can you see anything wrong with the following tests? Theoretically everything works and the tests
+are returning <Paragraph color="green" display="inline">green</Paragraph> but unconsciously the first thing that you did was to have a look at your codebase and
+how do you and your team usually implement tests for this use case. 
+After finding a similar test you just copy-pasted everything and just changed:
+
+- the component in react testing library render function
+- the data that you need to send to the component through props
+
+Every component is crucial for the application so imagine that this component had like **30 tests**... you would 
+need to change the render function 30 times!
+
+With that said, we reached the first thing that I like to do while testing react components which is
+**Extract your render function!** 
+
+How does this sentence translate into code? Let's see 👇
+
+```tsx line=1,5,6,7,13,23,31,32,33 filename=src/components/Profile/Profile.spec.tsx
+import { render as rtlRender } from '@testing-library/react';
+import { MOCKED_USER as user } from '@/testUtils/mocks';
+import Profile, { ProfileProps } from './Profile';
+
+const render = (props: Partial<ProfileProps> = {}) => rtlRender(
+  <Profile
+    user={user}
+    disabled
+    {...props}
+  />,
+);
+
+describe('<Profile /> component', () => {
+  it('should render successfully', () => {
+    expect.assertions(3);
+
+    const { getByText, getByRole } = render();
+
+    expect(getByText(user.name)).toBeInTheDocument();
+    expect(getByText(user.email)).toBeInTheDocument();
+    expect(getByRole('button')).toBeInTheDocument();
+  });
+
+  it('should render with the button disabled', () => {
+    expect.assertions(1);
+
+    const { getByText, getByRole } = render();
+
+    expect(getByRole('button')).toBeDisabled();
+  });
+
+  it('should render with the button enabled', () => {
+    expect.assertions(1);
+
+    const { getByText, getByRole } = render({
+      disabled: false,
+    });
+
+    expect(getByRole('button')).not.toBeDisabled();
+  });
+});
+```
+
+With this approach you get a lot of advantages namely:
+  - **Adaptability:** if the props for the component changes just need to change in the render method
+  - **Consistency:** your component will always have default values
+  - **Scalability:** you can overwrite every single prop for a specific use case
+  - **Readability:** you will have less boilerplate and all the props will be correctly typed
+
+This is pretty nice but give me a use case where this will come in handy... Sure!
+
+Imagine that now your component needs to receive articles and render them... 
+Let's start with the component changes:
+
+```js line=3,13,20 filename=src/components/Profile/Profile.tsx
+import React from 'react';
+import { User } from '@type/User';
+import { Article } from '@type/Article';
+import { Container, Paragraph } from '@components';
+
+const Profile = ({
+  user,
+  __articles,__
+  disabled = true,
+}: ProfileProps) => {
+  return (
+    <Container as="section">
+      <Paragraph>{user.name}</Paragraph>
+      <Paragraph>{user.email}</Paragraph>
+      <Button disabled={disabled}>Edit</Button>
+
+      {articles?.map((article) => <Paragraph>{article.name}</Paragraph>)}
+    </Container>
+  );
+};
+
+export type ProfileProps = {
+  user: User;
+  articles: Article[];
+  disabled?: boolean;
+};
+
+export default Profile;
+```
+
+Well, that was super easy ... I just needed to receive the article prop, render the articles inside the component and
+declare the prop in the type. 
+
+But what about the test? Testing also becomes easy with the help of the render function.
+You just add a default value for the `articles` prop in the render function and write your tests! 
+Of course, if you need you can just overwrite the props value for a specific use case!
+
+```tsx filename=src/components/Profile/Profile.spec.tsx
+import { render as rtlRender } from '@testing-library/react';
+import { MOCKED_USER as user, __MOCKED_ARTICLES__ as articles } from '@/testUtils/mocks';
+import Profile, { ProfileProps } from './Profile';
+
+const render = (props: Partial<ProfileProps> = {}) => rtlRender(
+  <Profile
+    user={user}
+    __articles={articles}__
+    disabled
+    {...props}
+  />,
+);
+
+describe('<Profile /> component', () => {
+  ...
+
+  it('should render the articles', () => {
+    expect.assertions(articles.length);
+
+    const { getByText } = render();
+
+    articles.forEach(({ name }) => expect(getByText(name)).toBeInTheDocument());
+  });
+
+  it('should not render the articles', () => {
+    expect.assertions(articles.length);
+
+    const { getByText } = render({
+      articles: [],
+    });
+
+    articles.forEach(({ name }) => expect(getByText(name)).not.toBeInTheDocument());
+  });
+});
+```
+
+# Overwrite your props 🔥
+
+We already saw how can we overwrite props but I want to show you another example! 👀
+
+Imagine that our `<Profile />` component accepts an `onButtonClick` prop that should work as a callback to the parent component
+in order to allow the parent to handle the click event how he wants, how can we achieve this? Well, if you are used to work with
+react the changes in the component are pretty simple, let's see:
+
+```js line=13,27 filename=src/components/Profile/Profile.tsx
+import React from 'react';
+import { User } from '@type/User';
+import { Article } from '@type/Article';
+import { Container, Paragraph } from '@components';
+
+const Profile = ({
+  user,
+  articles,
+  disabled = true,
+  __onButtonClick,__
+}: ProfileProps) => {
+  return (
+    <Container as="section">
+      <Paragraph>{user.name}</Paragraph>
+      <Paragraph>{user.email}</Paragraph>
+      <Button 
+        disabled={disabled}
+        onClick={onButtonClick}
+      >
+        Edit
+      </Button>
+
+      {articles?.map((article) => <Paragraph>{article.name}</Paragraph>)}
+    </Container>
+  );
+};
+
+export type ProfileProps = {
+  user: User;
+  articles: Article[];
+  disabled?: boolean;
+  onButtonClick: React.MouseEventHandler<HTMLButtonElement>;
+};
+
+export default Profile;
+```
+
+Since we added a new functionality we have to adapt our test suit and with our extracted `render` function the changes are really small and minimal!
+We just need to add a default value to the prop 🔥
+
+```tsx filename=src/components/Profile/Profile.spec.tsx
+...
+
+const render = (props: Partial<ProfileProps> = {}) => rtlRender(
+  <Profile
+    user={user}
+    articles={articles}
+    disabled
+    __onButtonClick={jest.fn()}__
+    {...props}
+  />,
+);
+
+describe('<Profile /> component', () => {
+  ...
+});
+```
+
+But what about the test that ensures that the function is called when the button is clicked? 
+Since we defined a default value for the `onButtonClick` as a `jest.fn()` we don't have a variable to use as a reference in our test
+so we can't assert anything unless we create a pointer to `jest.fn()`. 
+
+We could create that variable at the beginning of the test suite but it will only be used once so let's just take leverage 
+from the render function that we extracted previously and overwrite the prop for this single test!
+
+```tsx filename=src/components/Profile/Profile.spec.tsx
+import { __fireEvent__, render as rtlRender } from '@testing-library/react';
+import { MOCKED_USER as user, MOCKED_ARTICLES as articles } from '@/testUtils/mocks';
+import Profile, { ProfileProps } from './Profile';
+
+const render = (props: Partial<ProfileProps> = {}) => rtlRender(
+  <Profile
+    user={user}
+    articles={articles}
+    disabled
+    __onButtonClick={jest.fn()}__
+    {...props}
+  />,
+);
+);
+
+describe('<Profile /> component', () => {
+  ...
+
+  it('should call onButtonClick when button clicked', () => {
+    expect.assertions(1);
+
+    const onButtonClick = jest.fn();
+
+    const { getByRole } = render({
+      onButtonClick,
+      disabled: false,
+    });
+
+    fireEvent.click(getByRole('button'));
+
+    expect(onButtonClick).toHaveBeenCalled();
+  });
+});
+```
+
+# Fake your props!
+
+How do you usually pass data through your components when you are dealing with testing?
+I already saw a couple of ways to do this like:
+- create an object directly in the test case 😵‍💫
+- create a `json` file and import that file directly into the test 🫤
+- create an object within a utility folder and use it when needed 😐
+
+Every single of these approaches can also bring you serious problems.
+
+If you create an object in every test case you will have to edit every single test file if the object changes, imagine this for 
+an entity like a user which is used so many times across applications!
+
+If you create a `json` file and use that file in every test you will not have support for typescript when you import the file 
+but you will have a single source of truth for your entity's data.
+
+Creating an object with default values is the best option so far but it has a disadvantage if you hardcode the data. 
+Your data will be always the same every time that you run the tests which will not help you catch edge cases!
+
+Using the same object with hardcoded values will bring you too much predictability in the output and behavior of your test
+but until now this is the best option that we have so far so let's see how can we implement it.
+
+```ts filename=src/testUtils/mocks.ts
+export const MOCKED_USER: User = {
+  id: 1,
+  name: 'Tiago Sousa',
+  email: 'tiagomichaelsousa@gmail.com',
+  username: 'tiagomichaelsousa',
+};
+
+export const MOCKED_ARTICLES: Articles[] = [
+  {
+    id: 1,
+    name: 'Quick Preview — cloudmobility Hackathon',
+    slug: 'articles/quick-preview-cloudmobility-hackathon',
+  },
+  {
+    id: 2,
+    name: '1 on 1 with Laravel package development',
+    slug: 'articles/1-on-1-with-laravel-package-development',
+  },
+];
+```
+
+As we said before, we have a single source regarding our data which will help us if any of the entities change
+but we are also creating data predictability across all our tests!
+
+**Data predictability in tests it's a problem!** 
+I'm saying this with a lot of certainty because I already found implementation flaws by using random data for every test case
+when testing an application that I would probably not find if I was using hardcoded data.
+At the time if my tests were using always the same values I wouldn't be able to find the bug when I was developing the future and
+the application would be deployed to production!
+
+Another problem that I can point out with this mocked data as constants is if the `Article` data structure changes we will have to change 
+every single object inside the `MOCKED_ARTICLES` variable.
+
+This definitely doesn't scale so let's try to find a better way to handle this!
+
+What I like to do is to create **Factories** for my models.
+These factories will export an object that will contain two functions, the `create()` and `createMany()`.
+
+These functions will both call another function that will return an object based on the entity representation, correctly typed.
+This approach will also allow you to overwrite the parameters for a specific use case by accepting data within the parameters of the function.
+
+It's also at the factory level that I like to solve the problem regarding the **data predictability** by using [fakerjs](https://fakerjs.dev/) to randomly generate data 
+based on a specific datatype.
+
+But what does a factory looks like for an entity like a User? Let's have a look 👀
+
+```ts filename=src/utils/factories/user.ts
+import { User } from '@/types/user';
+import { faker } from '@faker-js/faker';
+import range from '@/utils/range';
+
+const user = (data: Partial<User> = {}): User => ({
+  id: faker.datatype.number(),
+  name: faker.name.fullName(),
+  email: faker.internet.email(),
+  username: faker.internet.userName(),
+  ...data,
+});
+
+const UserFactory = {
+  create: (data: Partial<User> = {}): User => user({ ...data }),
+  createMany: (
+    count = 2,
+    data: Partial<User>[] = [],
+  ) => range(1, count).map((_, index) => user(data[index])),
+};
+
+export default UserFactory;
+```
+
+> `range()` is a custom function but you can use the one from [lodash](https://lodash.com/docs/4.17.15#range) 🚀
+
+Now that we already have our factories ready let's see what are the requested changes in our tests, shall we? 👀
+Theoretically, we would just need to **update our imports** by removing the objects defined in the `@/testUtils/mocks`
+and replace them with our factories!
+
+```diff filename=src/components/Profile/Profile.spec.tsx
+import { fireEvent, render as rtlRender } from '@testing-library/react';
+import Profile, { ProfileProps } from './Profile';
+-  import { MOCKED_USER as user, MOCKED_ARTICLES as articles } from '@/testUtils/mocks';
++  import UserFactory from '@/utils/factories/user';
++  import ArticleFactory from '@/utils/factories/article';
+
++  const user = UserFactory.create();
++  const articles = ArticleFactory.createMany();
+
+const render = (props: Partial<ProfileProps> = {}) => rtlRender(
+  <Profile
+    user={user}
+    articles={articles}
+    disabled
+    onButtonClick={jest.fn()}
+    {...props}
+  />,
+);
+
+describe('<Profile /> component', () => {
+  it('should render successfully', () => {
+    expect.assertions(3);
+
+    const { getByText, getByRole } = render();
+
+    expect(getByText(user.name)).toBeInTheDocument();
+    expect(getByText(user.email)).toBeInTheDocument();
+    expect(getByRole('button')).toBeInTheDocument();
+  });
+  
+  it('should render with the button disabled', () => {
+    const { getByText, getByRole } = render();
+
+    expect(getByText(user.name)).toBeInTheDocument();
+    expect(getByText(user.email)).toBeInTheDocument();
+    expect(getByRole('button')).toBeDisabled();
+  });
+
+  it('should render with the button enabled', () => { 
+    const { getByText, getByRole } = render({
+      disabled: false,
+    });
+
+    expect(getByText(user.name)).toBeInTheDocument();
+    expect(getByText(user.email)).toBeInTheDocument();
+    expect(getByRole('button')).not.toBeDisabled();
+  });
+
+  it('should render the articles', () => {
+    expect.assertions(articles.length);
+
+    const { getByText } = render();
+
+    articles.forEach(({ name }) => expect(getByText(name)).toBeInTheDocument());
+  });
+
+  it('should not render the articles', () => {
+    expect.assertions(articles.length);
+
+    const { getByText } = render({
+      articles: [],
+    });
+
+    articles.forEach(({ name }) => expect(getByText(name)).not.toBeInTheDocument());
+  });
+
+  it('should call onButtonClick when button clicked', () => {
+    expect.assertions(1);
+
+    const onButtonClick = jest.fn();
+
+    const { getByRole } = render({
+      onButtonClick,
+      disabled: false,
+    });
+
+    fireEvent.click(getByRole('button'));
+
+    expect(onButtonClick).toHaveBeenCalled();
+  });
+});
+```
+
+How adaptable, scalable and readable are our tests now?! But it doesn't finish here! We can do more things 🚀
+
+Imagine that for a specific test suite or event test case you need to ensure that your factories have specific values...
+We can overwrite in both cases! Let's see how 👀
+
+```tsx filename=src/components/Profile/Profile.spec.tsx
+...
+
+/* 
+Here we can define the default values for the test suite 
+We will have a user called Tiago and two articles named Article 1 and Article 2
+each time that we access the user and articles const
+*/
+const user = UserFactory.create({ name: 'Tiago' });
+const articles = ArticleFactory.createMany(2, [
+  { name: 'Article 1' },
+  { name: 'Article 2' }
+]);
+
+describe('<Profile /> component', () => {
+  ...
+
+  it('allows to overwrite values at the test suite level', () => {
+    expect.assertions(3);
+
+    const { getByText } = render();
+
+    expect('Tiago').toBeInTheDocument();
+    expect('Article 1').toBeInTheDocument();
+    expect('Article 2').toBeInTheDocument();
+  });
+
+  /*
+    For this test let's overwrite both the user and article 
+    and assert that those values are defined
+  */
+  it('allows to overwrite values at the test case level', () => {
+    expect.assertions(3);
+
+    const overwrittenUser = UserFactory.create({ name: 'Tiago Sousa' });
+    const overwrittenArticles = ArticleFactory.createMany(2, [
+      { name: 'Article 1 - Test Case Level' },
+      { name: 'Article 2 - Test Case Level' }
+    ]);
+
+    const { getByText } = render({
+      user: overwrittenUser,
+      articles: overwrittenArticles,
+    });
+
+    expect('Tiago Sousa').toBeInTheDocument();
+    expect('Article 1 - Test Case Level').toBeInTheDocument();
+    expect('Article 2 - Test Case Level').toBeInTheDocument();
+  });
+});
+```
+
+And that's it! You have full control of your tests suites!
+
+# Conclusions
+
+This is just a POV (point of view) on how I like to test react components! 
+
+In my opinion, this approach is really **scalable**, **adaptable**, **readable** and gives you **consistency**
+by relying on mocked data (factories) for your component props that are different every time that you run your suite!
+
+But of course, in the same way that I like to share my POV and how I handle things, I also like to see other's POV! 
+So, if you have any comments, suggestions, potential improvements on this approach or even an article that you wrote 
+about this topic feel free to share it in the comments below 👇 It would be much appreciated! 🙏
+
+I hope you found this article interesting, feel free to share it with your colleagues or friends, because you know... Sharing
+is caring!
+
+Also, if you enjoy working at a large scale on projects with global impact and if you enjoy a challenge, please reach
+out to us at [xgeeks](https://xgeeks.io/)! We're always looking for talented people to join our team 🙌

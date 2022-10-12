@@ -55,7 +55,7 @@ const StyledPre = styled('pre', {
     color: '$$syntax2',
   },
 
-  '.token.attr-name, .token.keyword, .token.rule, .token.operator, .token.pseudo-class, .token.important': {
+  '.token.attr-name, .token.keyword, .token.rule, .token.operator, .token.pseudo-class, .token.important, .token.key': {
     color: '$$syntax3',
   },
 
