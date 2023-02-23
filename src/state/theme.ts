@@ -1,6 +1,11 @@
 import { atom } from "recoil";
 
-type ThemeType = 'light' | 'dark' | undefined;
+export enum ThemeTypeEnum {
+  LIGHT = 'light',
+  DARK = 'dark',
+};
+
+export type ThemeType = `${ThemeTypeEnum}` 
 
 export const TeamModalState = atom<ThemeType>({
   key: 'theme',

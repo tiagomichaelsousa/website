@@ -1,8 +1,25 @@
-import React, { PropsWithChildren, useRef } from 'react';
+import { PropsWithChildren, useRef } from 'react';
 import { styled } from '@theme/stitches.config';
 import { Flex, Box, Paragraph, Svg, Tooltip, TooltipContent, TooltipTrigger, StyledArrow, TooltipProvider } from '@components';
 import CopySvg from '@images/svgs/copy.svg';
 import copyToClipboard from 'copy-to-clipboard';
+
+const theme = {
+  yellow: {
+    $$background: 'rgb(255 135 31 / 10%)',
+    $$syntax1: '#5D6874',
+    $$syntax2: '#B7AE3C',
+    $$syntax3: '#EAC53C',
+    $$syntax4: '#EAC53C',
+  },
+  pink: {
+    $$background: 'rgba(0, 0, 100, 0.15)',
+    $$syntax1: '#BA059C',
+    $$syntax2: '#AE4992',
+    $$syntax3: '#009CC1',
+    $$syntax4: '#009CC1',
+  },
+} as const;
 
 const StyledPre = styled('pre', {
   $$background: '#6059f810',
@@ -168,22 +185,7 @@ const StyledPre = styled('pre', {
         },
       },
     },
-    theme: {
-      yellow: {
-        $$background: 'rgb(255 135 31 / 10%)',
-        $$syntax1: '#5D6874',
-        $$syntax2: '#B7AE3C',
-        $$syntax3: '#EAC53C',
-        $$syntax4: '#EAC53C',
-      },
-      pink: {
-        $$background: 'rgba(0, 0, 100, 0.15)',
-        $$syntax1: '#BA059C',
-        $$syntax2: '#AE4992',
-        $$syntax3: '#009CC1',
-        $$syntax4: '#009CC1',
-      },
-    },
+    theme
   },
 });
 
@@ -232,11 +234,13 @@ const Dots = ({ enabled }: { enabled: boolean }) => {
   );
 };
 
-type PreProps = { showLineNumbers: boolean; filename: string; dots: boolean; copy: boolean; theme: string };
+type PreProps = { showLineNumbers: boolean; filename: string; dots: boolean; copy: boolean; theme: keyof typeof theme };
 export const Pre = ({ children, filename = '', dots = true, copy = true, ...props }: PropsWithChildren<PreProps>) => {
-  const textInput = useRef(null);
+  const textInput = useRef<HTMLDivElement>(null);
 
   const onCopy = () => {
+    if(!textInput.current?.innerText) return;
+    
     copyToClipboard(textInput.current.innerText.split('\n\n').join('\n'));
   };
 

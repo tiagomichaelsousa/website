@@ -55,7 +55,13 @@ export const Heading = React.forwardRef<React.ElementRef<typeof DEFAULT_TAG>, He
       {children}
 
       {anchor && (
-        <Svg color="primary" css={{ display: 'inline-flex', ml: '$4 ' }} onClick={onCopy} pointer>
+        <Svg
+          data-testid="copy-link"
+          color="primary"
+          css={{ display: 'inline-flex', ml: '$4 ' }}
+          onClick={onCopy}
+          pointer
+        >
           <LinkSvg />
         </Svg>
       )}

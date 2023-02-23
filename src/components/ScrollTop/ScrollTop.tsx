@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useScrollY } from '@hooks/useScroll';
 import { CaretUpIcon } from '@radix-ui/react-icons';
 import { Svg, Tooltip, TooltipContent, TooltipTrigger, StyledArrow, TooltipProvider } from '@components';

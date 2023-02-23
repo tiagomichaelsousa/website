@@ -14,13 +14,14 @@ module.exports = {
   siteMetadata,
   plugins: [
     'gatsby-plugin-image',
-    'gatsby-plugin-react-helmet',
+    'gatsby-plugin-react-helmet-async',
     'gatsby-plugin-robots-txt',
     'gatsby-plugin-netlify',
     'gatsby-transformer-inline-svg',
     'gatsby-transformer-yaml',
     'gatsby-plugin-sitemap',
     'gatsby-plugin-twitter',
+    'gatsby-plugin-use-query-params',
     {
       resolve: 'gatsby-plugin-next-seo',
       options: {

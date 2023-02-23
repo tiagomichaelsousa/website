@@ -1,8 +1,8 @@
-import React, { PropsWithChildren, useEffect, useState } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 import { Box } from '@components';
 import Navbar from 'components/Navbar/Navbar';
 import Footer from 'components/Footer/Footer';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import useAllowedTokens from '@hooks/useAllowedTokens';
 import { MAINTENANCE_MODE } from '@utils/env';
 import Maintenance from '@sections/maintenance/Maintenance';

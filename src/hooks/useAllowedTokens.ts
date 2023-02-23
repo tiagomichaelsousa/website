@@ -1,9 +1,9 @@
 import { ACCESS_TOKENS } from '@utils/env';
-import { useQueryParam } from 'gatsby-query-params';
+import { useQueryParam, StringParam } from 'use-query-params';
 
 const useAllowedTokens = () => {
+  const [token] = useQueryParam('token', StringParam);
   const allowedTokens = ACCESS_TOKENS.split(',');
-  const token = useQueryParam('token', null);
 
   if (!token) return false;
 
