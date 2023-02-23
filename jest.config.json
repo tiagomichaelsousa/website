@@ -1,0 +1,29 @@
+{
+  "testEnvironment": "jsdom",
+  "collectCoverageFrom": [
+    "src/**/*.(js|ts|tsx|jsx)",
+    "!.*\\.spec\\.(ts|tsx)$"
+  ],
+  "testPathIgnorePatterns": [
+    "<rootDir>[/\\\\](build|docs|node_modules)[/\\\\]"
+  ],
+  "transformIgnorePatterns": [
+    "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"
+  ],
+  "coverageReporters": [
+    "text",
+    "text-summary"
+  ],
+  "testRegex": ".*\\.spec\\.(ts|tsx)$",
+  "moduleNameMapper": {
+    "components/(.*)$": "<rootDir>/src/components/$1",
+    "@components":"<rootDir>/src/components",
+    "@utils/(.*)$": "<rootDir>/src/components/utils",
+    "@sections/(.*)$": "<rootDir>/src/sections/$1",
+    "@pages/(.*)$": "<rootDir>/src/pages/$1",
+    "@theme/(.*)$": "<rootDir>/src/theme/$1",
+    "@images/(.*)$": "<rootDir>/src/images/$1",
+    "@hooks/(.*)$": "<rootDir>/src/hooks/$1",
+    "@type/(.*)$": "<rootDir>/src/types/$1"
+  }
+}
