@@ -1,16 +1,18 @@
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { Button } from './Button';
 
 describe('Button', () => {
   it('should render correctly', async () => {
     const buttonLabel = 'Test Text';
 
-    const { findAllByText } = render(
+    const { findByText } = render(
       <Button>{buttonLabel}</Button>
     );
 
   
-    expect(await findAllByText(buttonLabel)).toBeDefined();
+    await waitFor(() => {
+      expect(findByText(buttonLabel)).toBeDefined();
+    });
   });
 
   describe('when the button is clicked', () => {

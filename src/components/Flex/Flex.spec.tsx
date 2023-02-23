@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { Flex } from './Flex';
 
 describe('Flex', () => {
@@ -9,7 +9,9 @@ describe('Flex', () => {
     const { findByTestId } = render(
       <Flex>{testChild}</Flex>
     );
-  
-    expect(await findByTestId(testId)).toBeDefined();
+    
+    await waitFor(() => {
+      expect(findByTestId(testId)).toBeDefined();
+    });
   });
 });

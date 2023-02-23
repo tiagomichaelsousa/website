@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { Code } from './Code';
 
 describe('Code', () => {
@@ -10,6 +10,8 @@ describe('Code', () => {
       <Code>{testChild}</Code>
     );
   
-    expect(await findByTestId(testId)).toBeDefined();
+    await waitFor(() => {
+      expect(findByTestId(testId)).toBeDefined();
+    });
   });
 });

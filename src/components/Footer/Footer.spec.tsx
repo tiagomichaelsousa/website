@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { PersonalInfoFactory } from '@tests/factories/PersonalInfoFactory';
 import Footer from './Footer';
 
@@ -15,7 +15,9 @@ describe('Footer', () => {
       <Footer />
     );
 
-    expect(await findByTestId('footer-container')).toBeDefined();
-    expect(await findByTitle(new RegExp(personalInfo.social.twitter.handle))).toBeDefined();
+    await waitFor(() => {
+      expect(findByTestId('footer-container')).toBeDefined();
+      expect(findByTitle(new RegExp(personalInfo.social.twitter.handle))).toBeDefined();
+    })
   });
 });

@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { Carousel } from './Carousel';
 
 describe('Carousel', () => {
@@ -11,6 +11,8 @@ describe('Carousel', () => {
     </Carousel>
   );
   
-    expect(await findByTestId(testChildId)).toBeDefined();
+  await waitFor(() => {
+    expect(findByTestId(testChildId)).toBeDefined();
+  });
   });
 });

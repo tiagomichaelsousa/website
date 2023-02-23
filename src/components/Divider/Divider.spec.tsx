@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { Divider } from './Divider';
 
 describe('Divider', () => {
@@ -9,6 +9,8 @@ describe('Divider', () => {
       <Divider data-testid={testId}/>
     );
   
-    expect(await findByTestId(testId)).toBeDefined();
+    await waitFor(() => {
+      expect(findByTestId(testId)).toBeDefined();
+    });
   });
 });

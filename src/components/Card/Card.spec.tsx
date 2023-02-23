@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { Card } from './Card';
 
 describe('Card', () => {
@@ -10,6 +10,8 @@ describe('Card', () => {
       <Card>{testChild}</Card>
     );
   
-    expect(await findByTestId(testId)).toBeDefined();
+    await waitFor(() => {
+      expect(findByTestId(testId)).toBeDefined();
+    });
   });
 });

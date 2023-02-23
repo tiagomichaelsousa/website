@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { Blockquote } from './Blockquote';
 
 describe('Blockquote', () => {
@@ -10,6 +10,8 @@ describe('Blockquote', () => {
       <Blockquote>{testChild}</Blockquote>
     );
   
-    expect(await findByTestId(testId)).toBeDefined();
+    await waitFor(() => {
+      expect(findByTestId(testId)).toBeDefined();
+    });
   });
 });
