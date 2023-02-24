@@ -16,6 +16,7 @@ export default function ScrollTop() {
             <Tooltip>
                 <TooltipTrigger asChild>
                     <Svg
+                        data-testid="scrolltop-svg"
                         color="white"
                         size="32"
                         css={{

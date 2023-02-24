@@ -16,7 +16,7 @@ const Navbar: React.FC = () => {
   const { handleThemeChange, theme } = useTheme();
 
   return (
-    <Container css={{ pt: '$32', pb: 0 }} as="header">
+    <Container data-testid="navbar" css={{ pt: '$32', pb: 0 }} as="header">
       <Flex justify="between" align="center" css={{ '@mobile': { display: 'none' } }}>
         <GatsbyLink to="/" title="/">
           <StaticImage

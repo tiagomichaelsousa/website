@@ -1,5 +1,6 @@
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { Heading } from './Heading';
+import copyToClipboard from 'copy-to-clipboard';
 
 describe('Heading', () => {
   it('should render correctly', async () => {
@@ -9,9 +10,10 @@ describe('Heading', () => {
     const { queryByTestId } = render(
       <Heading>{testChild}</Heading>
     );
-  
-    expect(await queryByTestId(testId)).toBeInTheDocument();
-    
+
+    await waitFor(() => {
+      expect(queryByTestId(testId)).toBeInTheDocument();
+    });
   });
 
   describe('when anchor is true', () => {
@@ -23,7 +25,18 @@ describe('Heading', () => {
         <Heading anchor>{testChild}</Heading>
       );
     
-      expect(await queryByTestId(testId)).toBeInTheDocument();
+      await waitFor(() => {
+        expect(queryByTestId(testId)).toBeInTheDocument();
+
+        const button = queryByTestId('copy-link');
+        expect(button).toBeInTheDocument();
+
+        button?.click();
+
+        expect(copyToClipboard).toHaveBeenCalledWith(
+          `${window.location.origin}${window.location.pathname}#${testChild}`
+        );
+      });
     });
   });
 });

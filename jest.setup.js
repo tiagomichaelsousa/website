@@ -17,3 +17,5 @@ jest.mock("gatsby-plugin-image", () => {
     StaticImage: jest.fn().mockImplementation(mockImage),
   }
 })
+
+jest.mock('copy-to-clipboard');

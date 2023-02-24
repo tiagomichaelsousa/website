@@ -29,7 +29,7 @@ export const Layout = ({ children, page, paper = 'default' }: PropsWithChildren<
   }, []);
 
   return (
-    <Box paper={paper}>
+    <Box data-testid="layout" paper={paper}>
       <Helmet
         htmlAttributes={{
           lang: 'en',

@@ -15,7 +15,7 @@ const Maintenance: React.FC = () => {
   const { handleThemeChange, theme } = useTheme();
 
   return (
-    <Container size="3" css={{ py: 0 }}>
+    <Container data-testid="maintenance" size="3" css={{ py: 0 }}>
       <Flex
         direction="row"
         align="center"

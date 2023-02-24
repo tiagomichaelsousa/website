@@ -226,10 +226,10 @@ const Dots = ({ enabled }: { enabled: boolean }) => {
   }
 
   return (
-    <Flex css={{ bc: 'transparent', gap: '$8' }}>
-      <Dot color="red" />
-      <Dot color="yellow" />
-      <Dot color="green" />
+    <Flex data-testid="dots" css={{ bc: 'transparent', gap: '$8' }}>
+      <Dot data-testid="dot-red" color="red" />
+      <Dot data-testid="dot-yellow" color="yellow" />
+      <Dot data-testid="dot-green" color="green" />
     </Flex>
   );
 };
@@ -238,6 +238,7 @@ type PreProps = { showLineNumbers: boolean; filename: string; dots: boolean; cop
 export const Pre = ({ children, filename = '', dots = true, copy = true, ...props }: PropsWithChildren<PreProps>) => {
   const textInput = useRef<HTMLDivElement>(null);
 
+
   const onCopy = () => {
     if(!textInput.current?.innerText) return;
     
@@ -245,7 +246,7 @@ export const Pre = ({ children, filename = '', dots = true, copy = true, ...prop
   };
 
   return (
-    <StyledPre {...props}>
+    <StyledPre data-testid="pre-block" {...props}>
       {(dots || filename) && (
         <Flex align="center" css={{ px: '$24', mt: '$8' }}>
           <Dots enabled={dots} />
@@ -260,7 +261,7 @@ export const Pre = ({ children, filename = '', dots = true, copy = true, ...prop
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Svg onClick={onCopy} pointer>
+                <Svg data-testid="copy-svg" onClick={onCopy} pointer>
                   <CopySvg />
                 </Svg>
               </TooltipTrigger>
