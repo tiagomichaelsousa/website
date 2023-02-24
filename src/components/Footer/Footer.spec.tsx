@@ -11,13 +11,32 @@ jest.mock('@hooks/usePersonalInfo', () => {
 describe('Footer', () => {
   it('should render correctly', async () => {
 
-    const { findByTestId, findByTitle } = render(
+    const { queryByTestId, queryByTitle } = render(
       <Footer />
     );
 
     await waitFor(() => {
-      expect(findByTestId('footer-container')).toBeDefined();
-      expect(findByTitle(new RegExp(personalInfo.social.twitter.handle))).toBeDefined();
+      expect(queryByTestId('footer-container')).toBeInTheDocument();
+      expect(queryByTitle(new RegExp(personalInfo.social.twitter.handle))).toBeInTheDocument();
+      expect(queryByTitle('memoji12')).toBeInTheDocument();
+      expect(queryByTitle('footer')).toBeInTheDocument();
     })
+  });
+
+  describe('when the twitter button is clicked', () => {
+    it('should open a new tab with the correct url', () => {
+      const { getByTitle } = render(<Footer />);
+
+      const twitterButton = getByTitle(new RegExp(personalInfo.social.twitter.handle));
+      const twitterUrl = `https://twitter.com/intent/tweet?text=Hey%20${personalInfo.social.twitter.handle}`;
+
+      const handleClick = jest.fn();
+      twitterButton.onclick = handleClick;
+
+      twitterButton.click();
+
+      expect(twitterButton.getAttribute('href')).toEqual(twitterUrl);
+      expect(handleClick).toHaveBeenCalledTimes(1);
+    });
   });
 });

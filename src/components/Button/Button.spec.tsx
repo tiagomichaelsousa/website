@@ -5,13 +5,13 @@ describe('Button', () => {
   it('should render correctly', async () => {
     const buttonLabel = 'Test Text';
 
-    const { findByText } = render(
+    const { queryByText } = render(
       <Button>{buttonLabel}</Button>
     );
 
   
     await waitFor(() => {
-      expect(findByText(buttonLabel)).toBeDefined();
+      expect(queryByText(buttonLabel)).toBeInTheDocument();
     });
   });
 

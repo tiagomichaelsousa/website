@@ -6,12 +6,12 @@ describe('Card', () => {
     const testId = 'test-id'
     const testChild = <div data-testid={testId}>Test child</div>;
 
-    const { findByTestId } = render(
+    const { queryByTestId } = render(
       <Card>{testChild}</Card>
     );
   
     await waitFor(() => {
-      expect(findByTestId(testId)).toBeDefined();
+      expect(queryByTestId(testId)).toBeInTheDocument();
     });
   });
 });

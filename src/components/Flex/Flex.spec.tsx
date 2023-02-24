@@ -6,12 +6,12 @@ describe('Flex', () => {
     const testId = 'test-id';
     const testChild = <div data-testid={testId}>Test child</div>;
 
-    const { findByTestId } = render(
+    const { queryByTestId } = render(
       <Flex>{testChild}</Flex>
     );
     
     await waitFor(() => {
-      expect(findByTestId(testId)).toBeDefined();
+      expect(queryByTestId(testId)).toBeInTheDocument();
     });
   });
 });

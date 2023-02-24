@@ -5,14 +5,14 @@ describe('Carousel', () => {
   it('should render correctly', async () => {
     const testChildId = "test-swiper-slide"
 
-    const { findByTestId } = render(
+    const { queryByTestId } = render(
     <Carousel>
       <div data-testid={testChildId}/>
     </Carousel>
   );
   
   await waitFor(() => {
-    expect(findByTestId(testChildId)).toBeDefined();
+    expect(queryByTestId(testChildId)).toBeInTheDocument();
   });
   });
 });

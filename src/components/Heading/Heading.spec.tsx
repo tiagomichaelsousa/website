@@ -6,11 +6,11 @@ describe('Heading', () => {
     const testId = 'test-id';
     const testChild = <div data-testid={testId}>Test child</div>;
 
-    const { findByTestId } = render(
+    const { queryByTestId } = render(
       <Heading>{testChild}</Heading>
     );
   
-    expect(await findByTestId(testId)).toBeDefined();
+    expect(await queryByTestId(testId)).toBeInTheDocument();
     
   });
 
@@ -19,11 +19,11 @@ describe('Heading', () => {
       const testId = 'test-id';
       const testChild = <div data-testid={testId}>Test child</div>;
   
-      const { findByTestId } = render(
+      const { queryByTestId } = render(
         <Heading anchor>{testChild}</Heading>
       );
     
-      expect(await findByTestId(testId)).toBeDefined();
+      expect(await queryByTestId(testId)).toBeInTheDocument();
     });
   });
 });

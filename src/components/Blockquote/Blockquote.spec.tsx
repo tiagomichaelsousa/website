@@ -6,12 +6,12 @@ describe('Blockquote', () => {
     const testId = 'test-id'
     const testChild = <div data-testid={testId}>Test child</div>;
 
-    const { findByTestId } = render(
+    const { queryByTestId } = render(
       <Blockquote>{testChild}</Blockquote>
     );
   
     await waitFor(() => {
-      expect(findByTestId(testId)).toBeDefined();
+      expect(queryByTestId(testId)).toBeInTheDocument();
     });
   });
 });

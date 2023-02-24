@@ -16,6 +16,7 @@
     "text-summary"
   ],
   "testRegex": ".*\\.spec\\.(ts|tsx)$",
+  "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"],
   "moduleNameMapper": {
     "components/(.*)$": "<rootDir>/src/components/$1",
     "@components":"<rootDir>/src/components",

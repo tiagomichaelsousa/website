@@ -5,12 +5,12 @@ describe('Divider', () => {
   it('should render correctly', async () => {
     const testId = 'test-id';
 
-    const { findByTestId } = render(
+    const { queryByTestId } = render(
       <Divider data-testid={testId}/>
     );
   
     await waitFor(() => {
-      expect(findByTestId(testId)).toBeDefined();
+      expect(queryByTestId(testId)).toBeInTheDocument();
     });
   });
 });
