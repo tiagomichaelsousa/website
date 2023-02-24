@@ -4,8 +4,8 @@ date: 2023-03-01
 image: thumbnail.jpeg
 slug: articles/renovate-your-dependencies
 authors:
-  - tsousa
   - rpvsilva
+  - tsousa
 description: |
   Do you still spend time updating your dependencies manually or you don't even update them? 
   If so, this article is for you! Come along and see how can you integrate Renovate with GitLab
@@ -95,24 +95,23 @@ renovate:
       - '$RENOVATE_LOG_FILE'
 ```
 
-Two additional variables must be set on your CI/CD configuration.
-To configure these variables go to Settings -> CI/CD -> Variables.
-
-- **RENOVATE_TOKEN:** Create a personal access token (PAT) with `read_user`, `api`, `write_repository` permissions.
-- **GITHUB_COM_TOKEN:** Create a PAT from GitHub with minimum permissions. This token it's not mandatory and can be created on your personal account because
+To successfully configure renovate there are two environment variables that must be defined, namely:
+- **RENOVATE_TOKEN:** A Personal Access Token (PAT) with `read_user`, `api`, `write_repository` permissions.
+- **GITHUB_COM_TOKEN:** A PAT from GitHub with minimum permissions. This token it's not mandatory and can be created on your personal account because
 it's only used to get dependencies' changelog from GitHub API and bypass the requests limit.
 
-
-Below, we will explain three of the environment variables that are used. (TODO) 
-
+Other than these two required environment variables, you can also configure the following:
 
 - **RENOVATE_PLATFORM:**
 Due to our integration being on GitLab we must define this value as `gitlab` to Renovate successfully run.
 - **RENOVATE_EXTRA_FLAGS:**
-    - `--autodiscover`: When enabled, Renovate runs on every repository that the bot account can access.
-    - `--autodiscover-filter`: To limit which repositories Renovate can access, you define a glob-style or regex pattern path.
+    - `--autodiscover` When enabled, Renovate runs on every repository that the bot account can access.
+    - `--autodiscover-filter` To limit which repositories Renovate can access, you define a glob-style or regex pattern path.
 - **RENOVATE_REQUIRE_CONFIG:**
 With the `autodiscover` and `autodiscover-filter` flags defined, we set this variable to require the config file in each repository.
+
+
+If you don't have context in regards to how create environment variables in GitLab you can have a 👀 into the [documentation](https://docs.gitlab.com/ee/ci/variables/#for-a-project).
 
 # Renovate configuration 🤖
 Let's use our example of an application in React, now we need to create a `renovate.json` file to configure how Renovate runs in our repository.
@@ -198,7 +197,7 @@ lint:
   allow_failure: false
 ```
 
-##### Renovate ouput
+##### Renovate output
 Once your Renovate bot is running, you can monitor its execution on the Pipelines page. 
 As shown in the output below, Renovate creates new merge requests and updates branches if they need to be rebased with the target branch.
 Renovate also detects which package managers your repository uses and checks them accordingly, for example, `Dockerfile`, `npm`, and even GitLab CI.
@@ -264,7 +263,8 @@ We shared this with you because it helped us somehow and if it helped us it can 
 We hope you found this article interesting, feel free to share it with your colleagues or friends, because you know... Sharing
 is caring!
 
-**If you enjoy working on large-scale projects with global impact and if you like a real challenge,
-feel free to reach out to us at xgeeks! We are growing our team and you might be the next one to join this group of talented people 😉**
+Also, if you enjoy working at a large scale in projects with global impact and if you enjoy a challenge, please reach
+out to us at [xgeeks](https://xgeeks.io/)! We're always looking for talented people to join our team 🙌
 
-**Check out our social media channels if you want to get a sneak peek of life at xgeeks! See you soon!**
+
+Check out our social media channels if you want to get a sneak peek of life at xgeeks! See you soon!
