@@ -7,7 +7,7 @@ type Section = {
   right: Content[];
 };
 
-type Content = {
+export type Content = {
   title: string;
   description: string;
   icon: {

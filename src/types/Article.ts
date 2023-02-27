@@ -8,3 +8,13 @@ export type Article = {
   image: ImageDataLike;
   description: string;
 };
+
+export type GatsbyArticle = {
+  allMdx: {
+    edges: {
+      node: {
+        frontmatter: Article;
+      }
+    }[]
+  }
+}

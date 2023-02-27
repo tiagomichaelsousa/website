@@ -8,6 +8,7 @@ const Banner: React.FC = () => {
     <Container size="4" css={{ position: 'relative' }} as="section">
       <Container css={{ p: 0, position: 'relative' }}>
         <Box
+          data-testid="banner-box"
           css={{
             position: 'absolute',
             zIndex: '$1',

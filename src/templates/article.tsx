@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { graphql, PageProps } from 'gatsby';
 import Layout from 'components/Layout/Layout';
 import {

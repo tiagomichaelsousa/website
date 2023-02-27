@@ -115,7 +115,7 @@ const Maintenance: React.FC = () => {
 
           <Flex gap="8">
             <Paragraph>And of course change the theme</Paragraph>
-            <Svg onClick={handleThemeChange} color={theme == LIGHT_THEME_KEY ? 'primary' : 'yellow'}>
+            <Svg data-testid="change-theme-button" onClick={handleThemeChange} color={theme == LIGHT_THEME_KEY ? 'primary' : 'yellow'}>
               {theme == LIGHT_THEME_KEY ? <MoonSvg /> : <SunSvg />}
             </Svg>
           </Flex>

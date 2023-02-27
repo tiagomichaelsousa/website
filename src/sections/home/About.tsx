@@ -9,7 +9,7 @@ const About: React.FC = () => {
   return (
     <Container id="about" as="section">
       <Flex align="center" direction="column" css={{ mb: '$32' }}>
-        <Heading size="6" color="primary">
+        <Heading data-testid="heading-about" size="6" color="primary">
           About
         </Heading>
         <Heading size="5" css={{ mt: '$8' }}>
