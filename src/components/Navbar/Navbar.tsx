@@ -101,7 +101,7 @@ const Navbar: React.FC = () => {
             <VisuallyHidden>LinkedIn</VisuallyHidden>
           </Link>
 
-          <Svg onClick={handleThemeChange} color={theme == LIGHT_THEME_KEY ? 'primary' : 'yellow'} pointer>
+          <Svg data-testid="change-theme-button" onClick={handleThemeChange} color={theme == LIGHT_THEME_KEY ? 'primary' : 'yellow'} pointer>
             {theme == LIGHT_THEME_KEY ? <MoonSvg /> : <SunSvg />}
           </Svg>
         </Flex>

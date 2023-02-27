@@ -24,7 +24,7 @@ const NavbarMobile: React.FC = () => {
 
   return (
     <Box>
-      <Flex justify="between" align="center" css={{ '@bp1': { display: 'none' } }}>
+      <Flex data-testid="navbar-mobile" justify="between" align="center" css={{ '@bp1': { display: 'none' } }}>
         <GatsbyLink to="/" title="/">
           <StaticImage
             src="../../../static/images/memojis/memoji24.png"
@@ -37,7 +37,7 @@ const NavbarMobile: React.FC = () => {
           />
         </GatsbyLink>
 
-        <Svg onClick={handleToggleModal} color="contrast">
+        <Svg data-testid="toggle-menu-button" onClick={handleToggleModal} color="contrast">
           <MenuSvg />
         </Svg>
       </Flex>
@@ -45,6 +45,7 @@ const NavbarMobile: React.FC = () => {
         <Flex
           direction="column"
           justify="between"
+          data-testid="navbar-mobile-menu"
           css={{
             backgroundColor: '$paper',
             width: '100%',
@@ -61,8 +62,8 @@ const NavbarMobile: React.FC = () => {
             <GatsbyLink to="/" title="/">
               <StaticImage
                 src="../../../static/images/memojis/memoji24.png"
-                alt="memoji01"
-                title="memoji01"
+                alt="memoji24-menu"
+                title="memoji24-menu"
                 width={85}
                 height={85}
                 placeholder="blurred"
@@ -145,7 +146,7 @@ const NavbarMobile: React.FC = () => {
               <VisuallyHidden>LinkedIn</VisuallyHidden>
             </Link>
 
-            <Svg onClick={handleThemeChange} color={theme == LIGHT_THEME_KEY ? 'primary' : 'yellow'} pointer>
+            <Svg data-testid="change-theme-button" onClick={handleThemeChange} color={theme == LIGHT_THEME_KEY ? 'primary' : 'yellow'} pointer>
               {theme == LIGHT_THEME_KEY ? <MoonSvg /> : <SunSvg />}
             </Svg>
           </Flex>

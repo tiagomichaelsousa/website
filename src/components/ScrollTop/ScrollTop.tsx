@@ -35,7 +35,7 @@ export default function ScrollTop() {
                                 },
                             },
                         }}>
-                        <CaretUpIcon onClick={doScroll} />
+                        <CaretUpIcon data-testid="scroll-top-button" onClick={doScroll} />
                     </Svg>
                 </TooltipTrigger>
                 <TooltipContent>

@@ -18,24 +18,22 @@ const MdxComponents = {
 
     return <GatsbyLink to={href} title={href} variant="primary" {...props} />;
   },
-  img: (props: any) => {
-    return (
-      <Img
-        css={{
-          boxShadow: '$primary',
-          display: 'block',
-          mx: 'auto',
-          '@initial': {
-            width: '100%',
-          },
-          '@bp1': {
-            width: '50%',
-          },
-        }}
-        {...props}
-      />
-    );
-  },
+  img: (props: any) => (
+    <Img
+      css={{
+        boxShadow: '$primary',
+        display: 'block',
+        mx: 'auto',
+        '@initial': {
+          width: '100%',
+        },
+        '@bp1': {
+          width: '50%',
+        },
+      }}
+      {...props}
+    />
+  ),
   code: (props: any) => <Code {...props} />,
   pre: ({ children }: any) => (
     <Pre

@@ -3,7 +3,8 @@
   "testEnvironment": "jsdom",
   "collectCoverageFrom": [
     "src/**/*.(js|ts|tsx|jsx)",
-    "!.*\\.spec\\.(ts|tsx)$"
+    "!.*\\.spec\\.(ts|tsx)$",
+    "!src/tests/**/*.(js|ts|tsx|jsx)"
   ],
   "testPathIgnorePatterns": [
     "/node_modules/(?!(.*)).+\\.(js|jsx|ts|tsx)$"
