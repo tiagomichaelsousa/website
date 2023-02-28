@@ -10,3 +10,5 @@ public
 .DS_store
 yarn-error.log
 .vscode
+
+coverage

@@ -16,7 +16,10 @@
   ],
   "coverageReporters": [
     "text",
-    "text-summary"
+    "text-summary",
+    "json",
+    "lcov",
+    "clover"
   ],
   "testRegex": ".*\\.spec\\.(ts|tsx)$",
   "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"],
