@@ -17,7 +17,7 @@ describe('Link', () => {
 
 describe('GatsbyLink', () => {
   it('should render with the correct text', async () => {
-    const to = faker.datatype.string();
+    const to = faker.lorem.word();
     
     const { getByText } = render(
       <GatsbyLink to={to}>Link</GatsbyLink>

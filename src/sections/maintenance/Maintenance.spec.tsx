@@ -17,7 +17,7 @@ jest.mock('@hooks/useTheme', () => {
 });
 
 
-describe('Job section', () => {
+describe('Maintenance page', () => {
   it('should render correctly', async () => {
     const { queryByTitle, queryByTestId } = render(
       <RecoilRoot>

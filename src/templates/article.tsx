@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { graphql, PageProps } from 'gatsby';
+import { graphql } from 'gatsby';
 import Layout from 'components/Layout/Layout';
 import {
   Box,
@@ -31,7 +31,7 @@ import moment from 'moment';
 import Giscus from '@giscus/react';
 import useTheme from '@hooks/useTheme';
 
-const Article = ({ data: { mdx } }: PageProps<{ mdx: ArticlePageProps }>) => {
+const Article = ({ data: { mdx } }: { data: { mdx: ArticlePageProps } }) => {
   const { siteUrl } = useSiteMetadata();
   const { theme } = useTheme();
 
@@ -82,7 +82,7 @@ const Article = ({ data: { mdx } }: PageProps<{ mdx: ArticlePageProps }>) => {
         }}
       />
 
-      <Container css={{ p: '$24' }} as="article">
+      <Container data-testid="article" css={{ p: '$24' }} as="article">
         <Flex direction="column" align="center" gap="32" css={{ '@initial': { mt: '$16' }, '@bp1': { mt: '$32' }, mb: '$72' }}>
           <Svg color="white" size="32" css={{ p: '$16', bc: '$primary', br: '$circle' }}>
             <TagSvg />
@@ -120,7 +120,7 @@ const Article = ({ data: { mdx } }: PageProps<{ mdx: ArticlePageProps }>) => {
               </Box>
               <Flex direction="column" gap="8">
                 <GatsbyLink to={`#${author.id}`}>
-                  <Heading size="6">{author.name}</Heading>
+                  <Heading data-testid="heading-author-name" size="6">{author.name}</Heading>
                 </GatsbyLink>
 
                 <Paragraph color="gray">{author.company.role}</Paragraph>
@@ -293,7 +293,7 @@ export const pageQuery = graphql`
   }
 `;
 
-type ArticlePageProps = {
+export type ArticlePageProps = {
   body: string;
   timeToRead: number;
   excerpt: string;

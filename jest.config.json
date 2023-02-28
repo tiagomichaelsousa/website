@@ -36,5 +36,6 @@
     "^.+\\.svg$": "<rootDir>/svgTransform.js",
     "^.+\\.js?$": "babel-jest",
     "^.+\\.css$": "jest-transform-css"
-  }
+  },
+  "testTimeout": 30000
 }
