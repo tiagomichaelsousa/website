@@ -4,7 +4,9 @@
   "collectCoverageFrom": [
     "src/**/*.(js|ts|tsx|jsx)",
     "!.*\\.spec\\.(ts|tsx)$",
-    "!src/tests/**/*.(js|ts|tsx|jsx)"
+    "!src/tests/**/*.(js|ts|tsx|jsx)",
+    "!src/theme/stitches.config.ts",
+    "!src/utils/rehype*.js"
   ],
   "testPathIgnorePatterns": [
     "/node_modules/(?!(.*)).+\\.(js|jsx|ts|tsx)$"

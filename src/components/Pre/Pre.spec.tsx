@@ -1,7 +1,9 @@
 import { faker } from "@faker-js/faker";
 import { render, waitFor } from "@testing-library/react";
 import { Pre } from "./Pre";
+import copyToClipboard from 'copy-to-clipboard';
 
+jest.mock('copy-to-clipboard', () => jest.fn());
 
 describe('Pre', () => {
   it('should render with the correct text', async () => {
@@ -18,13 +20,13 @@ describe('Pre', () => {
     );
 
     await waitFor(() => {
-      const preBlock = queryByTestId('pre-block');
-      expect(preBlock).toBeInTheDocument();
+      expect(queryByTestId('pre-block')).toBeInTheDocument();
     });
   });
 
   describe('when the copy button is clicked', () => {
     it('should copy the text to the clipboard', async () => {
+      const content = '<h1>Hello World</h1>'
       const { getByTestId } = render(
         <Pre
           showLineNumbers={false}
@@ -33,20 +35,19 @@ describe('Pre', () => {
           dots={false}
           copy
         >
-          <code>Content</code>
+          <code>{content}</code>
         </Pre>
       );
 
-      const preBlock = getByTestId('pre-block');
-      expect(preBlock).toBeInTheDocument();
+      expect(getByTestId('pre-block')).toBeInTheDocument();
 
       const button = getByTestId('copy-svg');
       expect(button).toBeInTheDocument();
       button.onclick = jest.fn();
-  
       button.click();
-      
+
       expect(button.onclick).toHaveBeenCalledTimes(1);
+      expect(copyToClipboard).toHaveBeenCalledWith(content);
     });
   });
 

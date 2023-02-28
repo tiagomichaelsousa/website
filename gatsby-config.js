@@ -140,6 +140,8 @@ module.exports = {
           '@images': './src/images/',
           '@hooks': './src/hooks/',
           '@type': './src/types/',
+          '@state/*': './src/state/*',
+          '@tests/*': './src/tests/*',
         },
         extensions: ['tsx', 'ts'],
       },

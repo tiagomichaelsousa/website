@@ -240,9 +240,9 @@ export const Pre = ({ children, filename = '', dots = true, copy = true, ...prop
 
 
   const onCopy = () => {
-    if(!textInput.current?.innerText) return;
+    if(!textInput.current?.textContent) return;
     
-    copyToClipboard(textInput.current.innerText.split('\n\n').join('\n'));
+    copyToClipboard(textInput.current.textContent);
   };
 
   return (

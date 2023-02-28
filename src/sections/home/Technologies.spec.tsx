@@ -9,17 +9,17 @@ jest.mock('@hooks/useTechnologies', () => {
 
 describe('Job section', () => {
   it('should render correctly', async () => {
-    const { queryAllByTitle, queryByTitle, queryAllByText } = render(
+    const { queryAllByTitle, queryByTitle, queryAllByTestId } = render(
       <Technologies />
     );
 
     await waitFor(() => {
       expect(queryByTitle('memoji56')).toBeInTheDocument();
 
-      technologies.forEach(({ url, logo }) => {
+      technologies.forEach(({ url }, index) => {
         // Needs to be queryAllByTitle because swiper creates duplicate items to be looped
         expect(queryAllByTitle(url).length).toBeGreaterThan(0);
-        expect(queryAllByText(logo.svg.content).length).toBeGreaterThan(0);
+        expect(queryAllByTestId(`technology-logo-${index}`).length).toBeGreaterThan(0);
       });
     });
   });
