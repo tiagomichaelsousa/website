@@ -22,3 +22,27 @@
     name: xgeeks
     url: https://xgeeks.io/
     role: Software Engineer
+- id: rpvsilva
+  name: Rui Silva
+  avatar: ./avatars/rpvsilva.jpg
+  bio: |
+    Hey there, my name is Rui Silva and I'm a Fullstack Engineer currently working at xgeeks.
+    I love to learn new things and I'm always trying to improve my skills.
+    I'm currently trying to write more and more about the things I learn.
+  social:
+    github:
+      url: https://github.com/rpvsilva
+      handle: '@rpvsilva'
+    linkedin:
+      url: https://www.linkedin.com/in/silvaruipedro/
+      handle: '@silvaruipedro'
+    twitter:
+      url: https://twitter.com/rpvsilva
+      handle: '@rpvsilva'
+    medium:
+      url: https://medium.com/@rpvsilva
+      handle: '@rpvsilva'
+  company:
+    name: xgeeks
+    url: https://xgeeks.io/
+    role: Software Engineer
