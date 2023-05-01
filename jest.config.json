@@ -1,0 +1,46 @@
+{
+  "preset": "ts-jest",
+  "testEnvironment": "jsdom",
+  "collectCoverageFrom": [
+    "src/**/*.(js|ts|tsx|jsx)",
+    "!.*\\.spec\\.(ts|tsx)$",
+    "!src/tests/**/*.(js|ts|tsx|jsx)",
+    "!src/theme/stitches.config.ts",
+    "!src/utils/rehype*.js"
+  ],
+  "testPathIgnorePatterns": [
+    "/node_modules/(?!(.*)).+\\.(js|jsx|ts|tsx)$"
+  ],
+  "transformIgnorePatterns": [
+    "/node_modules/(?!(.*)).+\\.(js|jsx|ts|tsx)$"
+  ],
+  "coverageReporters": [
+    "text",
+    "text-summary",
+    "json",
+    "lcov",
+    "clover"
+  ],
+  "testRegex": ".*\\.spec\\.(ts|tsx)$",
+  "setupFilesAfterEnv": ["<rootDir>/jest.setup.js"],
+  "moduleNameMapper": {
+    "components/(.*)$": "<rootDir>/src/components/$1",
+    "@components":"<rootDir>/src/components",
+    "@utils/(.*)$": "<rootDir>/src/utils/$1",
+    "@sections/(.*)$": "<rootDir>/src/sections/$1",
+    "@pages/(.*)$": "<rootDir>/src/pages/$1",
+    "@theme/(.*)$": "<rootDir>/src/theme/$1",
+    "@images/(.*)$": "<rootDir>/src/images/$1",
+    "@hooks/(.*)$": "<rootDir>/src/hooks/$1",
+    "@type/(.*)$": "<rootDir>/src/types/$1",
+    "@state/(.*)$": "<rootDir>/src/state/$1",
+    "@tests/(.*)$": "<rootDir>/src/tests/$1"
+  },
+  "transform": {
+    "^.+\\.(ts|tsx)?$": "ts-jest",
+    "^.+\\.svg$": "<rootDir>/svgTransform.js",
+    "^.+\\.js?$": "babel-jest",
+    "^.+\\.css$": "jest-transform-css"
+  },
+  "testTimeout": 30000
+}

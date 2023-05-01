@@ -25,6 +25,7 @@ export const Button = styled('button', {
   fontWeight: 500,
   fontVariantNumeric: 'tabular-nums',
   borderRadius: '$8',
+  cursor: 'pointer',
 
   '& svg': {
     display: 'inline-block',

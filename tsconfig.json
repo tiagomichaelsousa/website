@@ -16,14 +16,16 @@
     "paths": {
       "components/*": ["src/components/*"],
       "@components": ["src/components"],
-      "@utils/*": ["src/components/utils"],
-      "@sections": ["src/sections/*"],
+      "@utils/*": ["src/utils/*"],
+      "@sections/*": ["src/sections/*"],
       "@pages/*": ["src/pages/*"],
       "@theme/*": ["src/theme/*"],
       "@images/*": ["src/images/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@type/*": ["src/types/*"]
-    }
+      "@type/*": ["src/types/*"],
+      "@state/*": ["src/state/*"],
+      "@tests/*": ["src/tests/*"],
+    },
   },
   "include": ["./src/**/*", "./custom.d.ts", "./.eslintrc.js", "./gatsby-config.js", "./gatsby-ssr.js", "./gatsby-node.js"]
 }

@@ -1,8 +1,25 @@
-import React, { PropsWithChildren, useRef } from 'react';
+import { PropsWithChildren, useRef } from 'react';
 import { styled } from '@theme/stitches.config';
 import { Flex, Box, Paragraph, Svg, Tooltip, TooltipContent, TooltipTrigger, StyledArrow, TooltipProvider } from '@components';
 import CopySvg from '@images/svgs/copy.svg';
 import copyToClipboard from 'copy-to-clipboard';
+
+const theme = {
+  yellow: {
+    $$background: 'rgb(255 135 31 / 10%)',
+    $$syntax1: '#5D6874',
+    $$syntax2: '#B7AE3C',
+    $$syntax3: '#EAC53C',
+    $$syntax4: '#EAC53C',
+  },
+  pink: {
+    $$background: 'rgba(0, 0, 100, 0.15)',
+    $$syntax1: '#BA059C',
+    $$syntax2: '#AE4992',
+    $$syntax3: '#009CC1',
+    $$syntax4: '#009CC1',
+  },
+} as const;
 
 const StyledPre = styled('pre', {
   $$background: '#6059f810',
@@ -168,22 +185,7 @@ const StyledPre = styled('pre', {
         },
       },
     },
-    theme: {
-      yellow: {
-        $$background: 'rgb(255 135 31 / 10%)',
-        $$syntax1: '#5D6874',
-        $$syntax2: '#B7AE3C',
-        $$syntax3: '#EAC53C',
-        $$syntax4: '#EAC53C',
-      },
-      pink: {
-        $$background: 'rgba(0, 0, 100, 0.15)',
-        $$syntax1: '#BA059C',
-        $$syntax2: '#AE4992',
-        $$syntax3: '#009CC1',
-        $$syntax4: '#009CC1',
-      },
-    },
+    theme
   },
 });
 
@@ -224,24 +226,27 @@ const Dots = ({ enabled }: { enabled: boolean }) => {
   }
 
   return (
-    <Flex css={{ bc: 'transparent', gap: '$8' }}>
-      <Dot color="red" />
-      <Dot color="yellow" />
-      <Dot color="green" />
+    <Flex data-testid="dots" css={{ bc: 'transparent', gap: '$8' }}>
+      <Dot data-testid="dot-red" color="red" />
+      <Dot data-testid="dot-yellow" color="yellow" />
+      <Dot data-testid="dot-green" color="green" />
     </Flex>
   );
 };
 
-type PreProps = { showLineNumbers: boolean; filename: string; dots: boolean; copy: boolean; theme: string };
+type PreProps = { showLineNumbers: boolean; filename: string; dots: boolean; copy: boolean; theme: keyof typeof theme };
 export const Pre = ({ children, filename = '', dots = true, copy = true, ...props }: PropsWithChildren<PreProps>) => {
-  const textInput = useRef(null);
+  const textInput = useRef<HTMLDivElement>(null);
+
 
   const onCopy = () => {
-    copyToClipboard(textInput.current.innerText.split('\n\n').join('\n'));
+    if(!textInput.current?.textContent) return;
+    
+    copyToClipboard(textInput.current.textContent);
   };
 
   return (
-    <StyledPre {...props}>
+    <StyledPre data-testid="pre-block" {...props}>
       {(dots || filename) && (
         <Flex align="center" css={{ px: '$24', mt: '$8' }}>
           <Dots enabled={dots} />
@@ -256,7 +261,7 @@ export const Pre = ({ children, filename = '', dots = true, copy = true, ...prop
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Svg onClick={onCopy} pointer>
+                <Svg data-testid="copy-svg" onClick={onCopy} pointer>
                   <CopySvg />
                 </Svg>
               </TooltipTrigger>

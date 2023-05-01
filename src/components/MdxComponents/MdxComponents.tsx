@@ -1,4 +1,3 @@
-import React from 'react';
 import { Code, GatsbyLink, Heading, Link, List, ListItem, Paragraph, Pre, Img, Blockquote } from '@components';
 import { styled } from '@theme/stitches.config';
 import { MDXProvider as MDXJsProvider } from '@mdx-js/react';
@@ -19,26 +18,24 @@ const MdxComponents = {
 
     return <GatsbyLink to={href} title={href} variant="primary" {...props} />;
   },
-  img: (props) => {
-    return (
-      <Img
-        css={{
-          boxShadow: '$primary',
-          display: 'block',
-          mx: 'auto',
-          '@initial': {
-            width: '100%',
-          },
-          '@bp1': {
-            width: '50%',
-          },
-        }}
-        {...props}
-      />
-    );
-  },
+  img: (props: any) => (
+    <Img
+      css={{
+        boxShadow: '$primary',
+        display: 'block',
+        mx: 'auto',
+        '@initial': {
+          width: '100%',
+        },
+        '@bp1': {
+          width: '50%',
+        },
+      }}
+      {...props}
+    />
+  ),
   code: (props: any) => <Code {...props} />,
-  pre: ({ children }) => (
+  pre: ({ children }: any) => (
     <Pre
       showLineNumbers={children.props.showLineNumbers}
       theme={children.props.theme}
@@ -51,7 +48,7 @@ const MdxComponents = {
   ),
   ul: (props: any) => <List {...props} />,
   li: (props: any) => <ListItem {...props} />,
-  blockquote: ({ children, ...props }) => (
+  blockquote: ({ children, ...props }: any) => (
     <Blockquote {...props}>
       <Paragraph fontWeight="bold" css={{ mr: '$8' }}>
         NOTE:

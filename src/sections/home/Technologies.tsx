@@ -42,10 +42,11 @@ const Technologies: React.FC = () => {
         </Paragraph>
 
         <Carousel css={{ mt: '$32', '@mobile': { width: '100%' } }}>
-          {technologies.map((technology) => (
+          {technologies.map((technology, index) => (
             <SwiperSlide key={technology.url}>
               <Link href={technology.url} title={technology.url} target="_blank" rel="noreferrer">
                 <Svg
+                  data-testid={`technology-logo-${index}`}
                   css={{ fill: technology?.color, color: technology?.color }}
                   dangerouslySetInnerHTML={{ __html: technology.logo.svg.content }}
                   size="64"

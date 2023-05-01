@@ -15,7 +15,7 @@ const Maintenance: React.FC = () => {
   const { handleThemeChange, theme } = useTheme();
 
   return (
-    <Container size="3" css={{ py: 0 }}>
+    <Container data-testid="maintenance" size="3" css={{ py: 0 }}>
       <Flex
         direction="row"
         align="center"
@@ -115,7 +115,7 @@ const Maintenance: React.FC = () => {
 
           <Flex gap="8">
             <Paragraph>And of course change the theme</Paragraph>
-            <Svg style={{ cursor: 'pointer' }} onClick={handleThemeChange} color={theme == LIGHT_THEME_KEY ? 'primary' : 'yellow'}>
+            <Svg data-testid="change-theme-button" style={{ cursor: 'pointer' }} onClick={handleThemeChange} color={theme == LIGHT_THEME_KEY ? 'primary' : 'yellow'}>
               {theme == LIGHT_THEME_KEY ? <MoonSvg /> : <SunSvg />}
             </Svg>
           </Flex>

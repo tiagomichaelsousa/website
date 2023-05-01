@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { Swiper, SwiperProps as SwiperCarouselProps } from 'swiper/react';
 import SwiperCore, { Autoplay, Pagination, Navigation } from 'swiper';
 SwiperCore.use([Autoplay, Pagination, Navigation]);
@@ -38,7 +38,7 @@ export const SwiperCarousel = styled(Swiper, {
   },
 });
 
-export const Carousel: React.FC<CarouselProps> = ({ SwiperProps, children, ...props }) => {
+export const Carousel: React.FC<PropsWithChildren<CarouselProps>> = ({ SwiperProps, children, ...props }) => {
   return (
     <SwiperCarousel
       centeredSlides

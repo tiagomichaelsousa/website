@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useScrollY } from '@hooks/useScroll';
 import { CaretUpIcon } from '@radix-ui/react-icons';
 import { Svg, Tooltip, TooltipContent, TooltipTrigger, StyledArrow, TooltipProvider } from '@components';
@@ -16,6 +16,7 @@ export default function ScrollTop() {
             <Tooltip>
                 <TooltipTrigger asChild>
                     <Svg
+                        data-testid="scrolltop-svg"
                         color="white"
                         size="32"
                         css={{
@@ -34,7 +35,7 @@ export default function ScrollTop() {
                                 },
                             },
                         }}>
-                        <CaretUpIcon onClick={doScroll} />
+                        <CaretUpIcon data-testid="scroll-top-button" onClick={doScroll} />
                     </Svg>
                 </TooltipTrigger>
                 <TooltipContent>

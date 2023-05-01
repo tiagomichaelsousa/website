@@ -22,7 +22,7 @@ const Blog: React.FC = () => {
       </Box>
       <Container size="3">
         <Flex align="center" direction="column" css={{ px: '$32' }}>
-          <Heading size="6" color="primary">
+          <Heading data-testid="heading-blog" size="6" color="primary">
             Blog
           </Heading>
           <Heading size="5" css={{ mt: '$8', mb: '$24' }}>
@@ -55,9 +55,10 @@ const Blog: React.FC = () => {
             },
           }}
         >
-          {articles.map((article) => (
+          {articles.map((article, index) => (
             <Card
               key={article.slug}
+              data-testid={`card-${article.slug}-${index}`}
               align="center"
               direction="column"
               css={{
@@ -69,6 +70,7 @@ const Blog: React.FC = () => {
             >
               <GatsbyLink to={article.slug} title={article.slug}>
                 <GatsbyImage
+                  data-testid={`image-${article.slug}-${index}`}
                   image={getImage(article.image) as IGatsbyImageData}
                   alt={article.title}
                   title={article.title}

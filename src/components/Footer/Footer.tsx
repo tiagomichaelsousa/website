@@ -9,6 +9,7 @@ const Footer: React.FC = () => {
 
   return (
     <Container
+      data-testid="footer-container"
       as="footer"
       id="contact"
       size={{

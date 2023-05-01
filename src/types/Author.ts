@@ -5,7 +5,6 @@ export type Author = {
   id: string;
   name: string;
   bio: string;
-  categories: string[];
   avatar: ImageDataLike;
   company: {
     name: string;
